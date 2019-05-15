@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.model.Menu;
 import com.example.service.MenuService;
 import com.example.utiles.CurrentUser;
 import com.example.utiles.Response;
