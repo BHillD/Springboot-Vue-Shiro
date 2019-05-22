@@ -19,7 +19,7 @@ public class ConfigController {
 
     @RequestMapping("/menu")
     public JSONObject Menu(){
-        return Response.ok(menuService.getMenuByUserId());
+        return Response.ok(menuService.getMenusByUserId());
     }
 
     @RequestMapping("/user")

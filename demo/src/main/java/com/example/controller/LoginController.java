@@ -22,6 +22,7 @@ public class LoginController {
 
     @RequestMapping("/logout")
     public JSONObject logout(){
+
         return loginService.logout();
     }
 }

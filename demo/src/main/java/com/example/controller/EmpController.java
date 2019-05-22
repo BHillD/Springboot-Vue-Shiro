@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.model.Employee;
 import com.example.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,25 +21,25 @@ public class EmpController {
     EmployeeService employeeService;
 
     @GetMapping("/basicinfo")
-    public Map<String, Object> getEmployeeByPage(
+    public JSONObject getEmployeeByPage(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(defaultValue = "") String keywords
         ){
-        Map<String, Object> map = new HashMap<>();
         List<Employee> employeeByPage = employeeService.getEmployeeByPage(page, size, keywords);
         Integer count = employeeService.getCountByKeywords(keywords);
-        map.put("emps", employeeByPage);
-        map.put("count", count);
-        return map;
+        JSONObject obj = new JSONObject();
+        obj.put("emps", employeeByPage);
+        obj.put("count", count);
+        return obj;
     }
 
     @GetMapping("/basicdata")
-    public Map<String, Object> getAllNations() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("nations", employeeService.getAllNations());
-        map.put("politics", employeeService.getAllPolitics());
-        return map;
+    public JSONObject getAllNations() {
+        JSONObject obj = new JSONObject();
+        obj.put("nations", employeeService.getAllNations());
+        obj.put("politics", employeeService.getAllPolitics());
+        return obj;
     }
 
 }

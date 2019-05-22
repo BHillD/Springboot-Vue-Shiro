@@ -28,14 +28,13 @@ public class Realm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken args) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) args;
         String username = token.getUsername();
-        String password = new String(token.getPassword());
         User user = userService.getUserByUsername(username);
         if(user == null){
             return null;
         }
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(
-                username,
-                password,
+                user.getUsername(),
+                user.getPassword(),
                 this.getName()
         );
         SecurityUtils.getSubject().getSession().setAttribute("user", user);
