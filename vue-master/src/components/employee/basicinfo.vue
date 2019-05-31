@@ -266,11 +266,6 @@
         multipleSelection: [],
         totalCount: -1,
         currentPage: 1,
-        // currentPage: {
-        //   label: 'name',
-        //   isLeaf: 'leaf',
-        //   children: 'children'
-        // },
         dialogVisible: false,
         tableLoading: false,
         advanceSearchViewVisible: false,
@@ -363,7 +358,7 @@
       loadEmps(){
         var _this = this;
         this.tableLoading = true;
-        this.getRequest("/employee/basicinfo?page=" + this.currentPage + "&size=10&keywords=" + this.keywords).then(resp=> {
+        this.getRequest("/employee/basic/info?page=" + this.currentPage + "&size=10&keywords=" + this.keywords).then(resp=> {
           this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
@@ -378,7 +373,7 @@
           if (valid) {
             if (this.emp.id) {
               this.tableLoading = true;
-              this.putRequest("/employee/basicdata", this.emp).then(resp=> {
+              this.putRequest("/employee/data", this.emp).then(resp=> {
                 _this.tableLoading = false;
                 if (resp && resp.status == 200) {
                   var data = resp.data;
@@ -411,7 +406,7 @@
       },
       initData(){
         var _this = this;
-        this.getRequest("/employee/basicdata").then(resp=> {
+        this.getRequest("/employee/basic/data").then(resp=> {
           if (resp && resp.status == 200) {
             var data = resp.data;
             _this.nations = data.nations;
@@ -431,12 +426,6 @@
       showAddEmpView(){
         this.dialogTitle = "添加员工";
         this.dialogVisible = true;
-        var _this = this;
-        this.getRequest("/employee/basic/maxWorkID").then(resp=> {
-          if (resp && resp.status == 200) {
-            _this.emp.workID = resp.data;
-          }
-        })
       },
       emptyEmpData(){
         this.emp = {

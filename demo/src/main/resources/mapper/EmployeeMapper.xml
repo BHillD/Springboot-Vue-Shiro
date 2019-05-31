@@ -33,8 +33,9 @@
     </select>
 
     <select id="getEmployeeByPage" resultMap="BaseResultMap">
-        select e.*,n.`id` as nid,n.`name` as nname,ps.`id` as psid,ps.`name` as psname from
-        employee e,nations n,politicsstatus ps where e.`nationId`=n.`id` and e.`politicId`=ps.`id` and e.`name`
+        select e.*,n.`id` as nid,n.`name` as nname,ps.`id` as psid,ps.`name` as psname
+        from employee e,nations n,politicsstatus ps
+        where e.`nationId`=n.`id` and e.`politicId`=ps.`id` and e.`name`
         like concat('%',#{keywords},'%')
         <if test="start!=null and size!=null">
             order by e.id limit #{start},#{size}

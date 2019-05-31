@@ -34,7 +34,7 @@ export default {
         submit: function(){
             var _this = this;
             this.loading = true;
-            _this.postRequest('/user/login' , {
+            _this.postRequest('/auth/login' , {
                 username: _this.loginForm.username,
                 password: _this.loginForm.password,
             }).then(resp => {

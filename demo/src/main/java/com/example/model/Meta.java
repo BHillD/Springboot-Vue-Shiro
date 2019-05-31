@@ -1,5 +1,12 @@
 package com.example.model;
 
+/**
+ * @author
+ * @date 2019/5/31
+ * @description
+ */
+
+
 public class Meta {
     private boolean keepAlive;
     private boolean requireAuth;

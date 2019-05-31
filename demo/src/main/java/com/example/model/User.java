@@ -1,6 +1,12 @@
 package com.example.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
+
+/**
+ * @author
+ * @date 2019/5/31
+ * @description
+ */
+
 
 public class User {
     private Integer id;

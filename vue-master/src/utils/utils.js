@@ -5,7 +5,7 @@ export const initMenu = (router,store)=> {
         return;
     }
 
-    getRequest("/config/menu").then(resp=> {
+    getRequest("/info/menu").then(resp=> {
         if(resp && resp.status == 200){
             let fmtRoutes = formatRoutes(resp.data.obj);
             router.addRoutes(fmtRoutes);

@@ -1,11 +1,18 @@
 package com.example.model;
 
+/**
+ * @author
+ * @date 2019/5/31
+ * @description
+ */
+
+
 public class Nation {
     private Integer id;
     private String name;
 
-    public Integer getId() {
-        return id;
+    public int getId() {
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -13,7 +20,7 @@ public class Nation {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {

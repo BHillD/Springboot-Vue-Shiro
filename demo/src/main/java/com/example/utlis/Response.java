@@ -1,6 +1,13 @@
-package com.example.utiles;
+package com.example.utlis;
 
 import com.alibaba.fastjson.JSONObject;
+
+/**
+ * @author
+ * @date 2019/5/31
+ * @description
+ */
+
 
 public class Response {
     public static JSONObject ok(){

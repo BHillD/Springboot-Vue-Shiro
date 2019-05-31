@@ -10,12 +10,20 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ * @author
+ * @date 2019/5/31
+ * @description
+ */
+
 public class Realm extends AuthorizingRealm {
 
     @Autowired
     UserService userService;
 
     @Override
+
+
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String username = (String)principals.getPrimaryPrincipal();
         User user = userService.getUserByUsername(username);

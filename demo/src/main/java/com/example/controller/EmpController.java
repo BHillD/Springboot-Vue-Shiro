@@ -4,14 +4,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.model.Employee;
 import com.example.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+/**
+ * @author
+ * @date 2019/5/31
+ * @description
+ */
+
 
 @RestController
 @RequestMapping("/employee")
@@ -20,7 +22,14 @@ public class EmpController {
     @Autowired
     EmployeeService employeeService;
 
-    @GetMapping("/basicinfo")
+    /**
+     *
+     * @param page  当前页数
+     * @param size  每页的长度
+     * @param keywords  用于查询的关键字 默认为空
+     * @return 返回当前页的数据
+     */
+    @GetMapping("/basinfo")
     public JSONObject getEmployeeByPage(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
@@ -34,12 +43,28 @@ public class EmpController {
         return obj;
     }
 
-    @GetMapping("/basicdata")
-    public JSONObject getAllNations() {
+    /**
+     *
+     * @return 返回所有民族和政治面貌信息
+     */
+    @GetMapping("/data")
+    public JSONObject getAllData() {
         JSONObject obj = new JSONObject();
         obj.put("nations", employeeService.getAllNations());
         obj.put("politics", employeeService.getAllPolitics());
         return obj;
+    }
+
+
+    /**
+     *
+     * @param obj 含有新用户全部信息的JSON对象
+     * @return
+     */
+    @GetMapping("/add")
+    public JSONObject addInfo(@RequestBody JSONObject obj){
+
+        return null;
     }
 
 }

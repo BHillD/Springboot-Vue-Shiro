@@ -2,6 +2,13 @@ package com.example.model;
 
 import java.util.List;
 
+/**
+ * @author
+ * @date 2019/5/31
+ * @description
+ */
+
+
 public class Menu {
     private Integer id;
     private String path;

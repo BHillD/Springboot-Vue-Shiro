@@ -1,5 +1,5 @@
 <template>
   <div>
-    <h1>高级资料</h1>
+      高级资料
   </div>
 </template>

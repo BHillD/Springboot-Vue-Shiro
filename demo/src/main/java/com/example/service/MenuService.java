@@ -2,11 +2,18 @@ package com.example.service;
 
 import com.example.mapper.MenuMapper;
 import com.example.model.Menu;
-import com.example.utiles.CurrentUser;
+import com.example.utlis.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+/**
+ * @author
+ * @date 2019/5/31
+ * @description
+ */
+
 
 @Service
 public class MenuService{

@@ -2,28 +2,32 @@ package com.example.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.service.MenuService;
-import com.example.utiles.CurrentUser;
-import com.example.utiles.Response;
+import com.example.utlis.CurrentUser;
+import com.example.utlis.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+/**
+ * @author
+ * @date 2019/5/31
+ * @description
+ */
 
 @RestController
-@RequestMapping("/config")
-public class ConfigController {
+@RequestMapping("/info")
+public class InfoController {
 
     @Autowired
     MenuService menuService;
 
-    @RequestMapping("/menu")
+    /**
+     *
+     * @return 返回当前用户可用的菜单数据
+     */
+    @GetMapping("/menu")
     public JSONObject Menu(){
         return Response.ok(menuService.getMenusByUserId());
-    }
-
-    @RequestMapping("/user")
-    public JSONObject User(){
-        return Response.ok(CurrentUser.getCurrentUser());
     }
 }
