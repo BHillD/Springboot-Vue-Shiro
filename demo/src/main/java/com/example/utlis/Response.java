@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 /**
  * @author
  * @date 2019/5/31
- * @description
+ * @description  JSON封装类
  */
 
 

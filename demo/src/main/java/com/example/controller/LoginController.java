@@ -22,7 +22,7 @@ public class LoginController {
 
 
     /**
-     *
+     * 验证用户名与密码 进行登录操作
      * @param obj 存有用户账号与密码的JSON对象
      * @return 登录成功返回用户信息
      *         登录失败返回错误信息
@@ -39,7 +39,7 @@ public class LoginController {
 
 
     /**
-     *
+     * 进行注销操作
      * @return
      */
     @GetMapping("/logout")

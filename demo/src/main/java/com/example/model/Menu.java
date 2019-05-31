@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author
  * @date 2019/5/31
- * @description
+ * @description  菜单实体类
  */
 
 

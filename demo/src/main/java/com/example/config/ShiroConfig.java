@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author
  * @date 2019/5/31
- * @description
+ * @description Shiro配置类
  */
 
 @Configuration

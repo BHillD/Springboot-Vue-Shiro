@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * @author
  * @date 2019/5/31
- * @description
+ * @description 自定义Realm类
  */
 
 public class Realm extends AuthorizingRealm {

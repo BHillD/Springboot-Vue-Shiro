@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * @author
  * @date 2019/5/31
- * @description
+ * @description  员工实体类
  */
 
 
