@@ -10,6 +10,7 @@ import {postRequest} from './utils/axios'
 import ElementUi from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import {initMenu} from './utils/utils';
+import './utils/date'
 
 Vue.config.productionTip = false;
 Vue.use(ElementUi);

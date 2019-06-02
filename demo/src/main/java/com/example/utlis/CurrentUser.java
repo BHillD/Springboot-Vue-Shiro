@@ -6,7 +6,7 @@ import org.apache.shiro.SecurityUtils;
 /**
  * @author
  * @date 2019/5/31
- * @description 封装工具类
+ * @description 用户工具类
  */
 
 public class CurrentUser {

@@ -3,6 +3,7 @@ package com.example.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.example.model.Employee;
 import com.example.service.EmployeeService;
+import com.example.utlis.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,6 @@ public class EmpController {
     EmployeeService employeeService;
 
     /**
-     *
      * @param page  当前页数 默认为1
      * @param size  每页的长度 默认为10
      * @param keywords  用于查询的关键字 默认为空
@@ -43,28 +43,28 @@ public class EmpController {
         return obj;
     }
 
-    /**
-     *
-     * @return 返回所有民族和政治面貌信息
-     */
-    @GetMapping("/data")
-    public JSONObject getAllData() {
-        JSONObject obj = new JSONObject();
-        obj.put("nations", employeeService.getAllNations());
-        obj.put("politics", employeeService.getAllPolitics());
-        return obj;
-    }
-
 
     /**
      *
      * @param obj 含有新用户全部信息的JSON对象
      * @return
      */
-    @GetMapping("/add")
-    public JSONObject addInfo(@RequestBody JSONObject obj){
+    @PostMapping("/add")
+    public JSONObject addEmp(@RequestBody JSONObject obj){
+        employeeService.addEmployee(obj);
+        return Response.ok();
+    }
 
-        return null;
+    @PostMapping("/delete")
+    public JSONObject delEmp(@RequestBody JSONObject obj){
+        employeeService.deleteEmployee(obj);
+        return Response.ok();
+    }
+
+    @PostMapping("/edit")
+    public JSONObject editEmp(@RequestBody JSONObject obj){
+        employeeService.editEmployee(obj);
+        return Response.ok();
     }
 
 }

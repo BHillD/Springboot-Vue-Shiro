@@ -16,12 +16,30 @@ public class Employee {
     private Date birthday;
     private String idCard;
     private String wedlock;
-    private Nation nation;
+    private String nation;
     private String nativePlace;
-    private PoliticsStatus politicsStatus;
+    private String politic;
     private String email;
     private String phone;
     private String address;
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birthday=" + birthday +
+                ", idCard='" + idCard + '\'' +
+                ", wedlock='" + wedlock + '\'' +
+                ", nation='" + nation + '\'' +
+                ", nativePlace='" + nativePlace + '\'' +
+                ", politic='" + politic + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 
     public Integer getId() {
         return id;
@@ -71,12 +89,20 @@ public class Employee {
         this.wedlock = wedlock;
     }
 
-    public Nation getNation() {
+    public String getNation() {
         return nation;
     }
 
-    public void setNation(Nation nation) {
+    public void setNation(String nation) {
         this.nation = nation;
+    }
+
+    public String getPolitic() {
+        return politic;
+    }
+
+    public void setPolitic(String politic) {
+        this.politic = politic;
     }
 
     public String getNativePlace() {
@@ -85,14 +111,6 @@ public class Employee {
 
     public void setNativePlace(String nativePlace) {
         this.nativePlace = nativePlace;
-    }
-
-    public PoliticsStatus getPoliticsStatus() {
-        return politicsStatus;
-    }
-
-    public void setPoliticsStatus(PoliticsStatus politicsStatus) {
-        this.politicsStatus = politicsStatus;
     }
 
     public String getEmail() {

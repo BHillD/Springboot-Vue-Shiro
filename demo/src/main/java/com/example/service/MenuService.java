@@ -21,6 +21,10 @@ public class MenuService{
     @Autowired
     MenuMapper menuMapper;
 
+    /**
+     * 通过用户ID查询可查看的菜单资源
+     * @return 当前用户可用的菜单资源
+     */
     public List<Menu> getMenusByUserId() {
         return menuMapper.getMenusByUserId(CurrentUser.getCurrentUser().getId());
     }

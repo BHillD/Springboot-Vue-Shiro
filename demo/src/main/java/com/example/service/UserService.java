@@ -18,7 +18,11 @@ public class UserService{
     @Autowired
     UserMapper userMapper;
 
-
+    /**
+     * 通过用户名查询用户
+     * @param username 用户名
+     * @return 用户信息
+     */
     public User getUserByUsername(String username) {
         return userMapper.getUserByUsername(username);
     }

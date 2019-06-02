@@ -69,8 +69,8 @@
               label="婚姻状况">
             </el-table-column>
             <el-table-column
-              width="50"
-              prop="nation.name"
+              width="80"
+              prop="nation"
               label="民族">
             </el-table-column>
             <el-table-column
@@ -79,18 +79,18 @@
               label="籍贯">
             </el-table-column>
             <el-table-column
-              prop="politicsStatus.name"
+              prop="politic"
               label="政治面貌">
             </el-table-column>
             <el-table-column
               prop="email"
-              width="180"
+              width="160"
               align="left"
               label="电子邮件">
             </el-table-column>
             <el-table-column
               prop="phone"
-              width="150"
+              width="140"
               label="电话号码">
             </el-table-column>
             <el-table-column
@@ -102,7 +102,7 @@
             <el-table-column
               fixed="right"
               label="操作"
-              width="150">
+              width="140">
               <template slot-scope="scope">
                 <el-button @click="showEditEmpView(scope.row)" style="padding: 3px 4px 3px 4px;margin: 2px"
                            size="mini">编辑
@@ -129,7 +129,7 @@
         </div>
       </el-main>
     </el-container>
-        <el-form :model="emp" :rules="rules" ref="addEmpForm" style="margin: 0px;padding: 0px;">
+        <el-form :model="emp" :rules="rules" ref="EmpForm" style="margin: 0px;padding: 0px;">
       <div style="text-align: left">
         <el-dialog
           :title="dialogTitle"
@@ -162,7 +162,7 @@
                   <el-date-picker
                     v-model="emp.birthday"
                     size="mini"
-                    value-format="yyyy-MM-dd HH:mm:ss"
+                    value-format="yyyy-MM-dd"
                     style="width: 150px"
                     type="date"
                     placeholder="出生日期">
@@ -172,13 +172,13 @@
             </el-col>
             <el-col :span="7">
               <div>
-                <el-form-item label="政治面貌:" prop="politicId">
-                  <el-select v-model="emp.politicId" style="width: 200px" size="mini" placeholder="政治面貌">
+                <el-form-item label="政治面貌:" prop="politic">
+                  <el-select v-model="emp.politic" style="width: 200px" size="mini" placeholder="政治面貌">
                     <el-option
                       v-for="item in politics"
                       :key="item.id"
                       :label="item.name"
-                      :value="item.id">
+                      :value="item.name">
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -188,13 +188,13 @@
           <el-row>
             <el-col :span="6">
               <div>
-                <el-form-item label="民族:" prop="nationId">
-                  <el-select v-model="emp.nationId" style="width: 150px" size="mini" placeholder="请选择民族">
+                <el-form-item label="民族:" prop="nation">
+                  <el-select v-model="emp.nation" style="width: 150px" size="mini" placeholder="请选择民族">
                     <el-option
                       v-for="item in nations"
                       :key="item.id"
                       :label="item.name"
-                      :value="item.id">
+                      :value="item.name">
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -244,10 +244,18 @@
                 </el-form-item>
               </div>
             </el-col>
+            <el-col :span="7">
+              <div>
+                <el-form-item label="身份证:" prop="idCard">
+                  <el-input prefix-icon="el-icon-edit" v-model="emp.idCard" size="mini" style="width: 200px"
+                            placeholder="身份证号码..." :disabled="disable"></el-input>
+                </el-form-item>
+              </div>
+            </el-col>
           </el-row>
           <span slot="footer" class="dialog-footer">
     <el-button size="mini" @click="cancelEidt">取 消</el-button>
-    <el-button size="mini" type="primary" @click="addEmp('addEmpForm')">确 定</el-button>
+    <el-button size="mini" type="primary" @click="Emp('EmpForm')">确 定</el-button>
   </span>
         </el-dialog>
       </div>
@@ -260,23 +268,62 @@
       return {
         emps: [],
         keywords: '',
+        disable: false,
         dialogTitle: '',
-        nations: [],
-        politics: [],
+        nations: [{
+          "id": 1,
+          "name": "汉族"
+        },{
+          "id": 2,
+          "name": "藏族"
+        },{
+          "id": 3,
+          "name": "蒙古族"
+        },{
+          "id": 4,
+          "name": "维吾尔族"
+        }],
+        politics: [{
+          "id": 1,
+          "name": "群众"
+        },{
+          "id": 2,
+          "name": "共青团员"
+        },{
+          "id": 3,
+          "name": "预备党员"
+        },{
+          "id": 4,
+          "name": "中共党员"
+        }],
         multipleSelection: [],
         totalCount: -1,
         currentPage: 1,
         dialogVisible: false,
         tableLoading: false,
         advanceSearchViewVisible: false,
+
+        edit: {
+          name: '',
+          gender: '',
+          birthday: '',
+          wedlock: '',
+          nation: '',
+          nativePlace: '',
+          politic: '',
+          email: '',
+          phone: '',
+          address: ''
+        },
+
         emp: {
           name: '',
           gender: '',
           birthday: '',
           wedlock: '',
-          nationId: '',
+          nation: '',
           nativePlace: '',
-          politicId: '',
+          politic: '',
           email: '',
           phone: '',
           address: ''
@@ -286,9 +333,9 @@
           gender: [{required: true, message: '必填:性别', trigger: 'blur'}],
           birthday: [{required: true, message: '必填:出生日期', trigger: 'blur'}],
           wedlock: [{required: true, message: '必填:婚姻状况', trigger: 'blur'}],
-          nationId: [{required: true, message: '必填:民族', trigger: 'change'}],
+          nation: [{required: true, message: '必填:民族', trigger: 'blur'}],
           nativePlace: [{required: true, message: '必填:籍贯', trigger: 'blur'}],
-          politicId: [{required: true, message: '必填:政治面貌', trigger: 'blur'}],
+          politic: [{required: true, message: '必填:政治面貌', trigger: 'blur'}],
           email: [{required: true, message: '必填:电子邮箱', trigger: 'blur'}, {
             type: 'email',
             message: '邮箱格式不正确',
@@ -296,51 +343,59 @@
           }],
           phone: [{required: true, message: '必填:电话号码', trigger: 'blur'}],
           address: [{required: true, message: '必填:联系地址', trigger: 'blur'}],
+          idCard: [{required: true, message: '必填:身份证', trigger: 'blur'}]
         }
       };
     },
     mounted: function () {
-      this.initData();
       this.loadEmps();
     },
+    
     methods: {
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
       deleteManyEmps(){
-        this.$confirm('此操作将删除[' + this.multipleSelection.length + ']条数据, 是否继续?', '提示', {
+        this.$confirm('此操作将删除 ' + this.multipleSelection.length + ' 条数据, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          var ids = '';
+          var idCards = '';
           for (var i = 0; i < this.multipleSelection.length; i++) {
-            ids += this.multipleSelection[i].id + ",";
+            idCards += this.multipleSelection[i].idCard + ",";
           }
-          this.doDelete(ids);
+          this.doDelete(idCards)
         }).catch(() => {
         });
       },
       deleteEmp(row){
-        this.$confirm('此操作将永久删除[' + row.name + '], 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除 '+ row.name +", 是否继续?", '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.doDelete(row.id);
-        }).catch(() => {
-        });
+          this.doDelete(row.idCard);
+        })
       },
-      doDelete(ids){
+      doDelete(idCards){
         this.tableLoading = true;
         var _this = this;
-        this.deleteRequest("/employee/basic/emp/" + ids).then(resp=> {
-          _this.tableLoading = false;
-          if (resp && resp.status == 200) {
-            var data = resp.data;
-            _
-            _this.loadEmps();
+        _this.postRequest("/employee/delete",{
+          "idCards": idCards
+        }).then(resp=> {
+          if(resp && resp.status == 200){
+            let data = resp.data;
+            if(data.status == 200){
+              _this.$message("操作成功");
+            }else {
+              _this.$message("操作失败,请重试");
+            }
+          }else {
+            return false;
           }
+          _this.loadEmps();
+          tableLoading = false;
         })
       },
       keywordsChange(val){
@@ -358,7 +413,7 @@
       loadEmps(){
         var _this = this;
         this.tableLoading = true;
-        this.getRequest("/employee/basic/info?page=" + this.currentPage + "&size=10&keywords=" + this.keywords).then(resp=> {
+        this.getRequest("/employee/basinfo?page=" + this.currentPage + "&size=10&keywords=" + this.keywords).then(resp=> {
           this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
@@ -366,76 +421,76 @@
             _this.totalCount = data.count;
           }
         })
+        this.tableLoading = false;
       },
-      addEmp(formName){
+      Emp(formName){
         var _this = this;
         this.$refs[formName].validate((valid) => {
-          if (valid) {
-            if (this.emp.id) {
-              this.tableLoading = true;
-              this.putRequest("/employee/data", this.emp).then(resp=> {
-                _this.tableLoading = false;
-                if (resp && resp.status == 200) {
-                  var data = resp.data;
-                  _this.dialogVisible = false;
-                  _this.emptyEmpData();
-                  _this.loadEmps();
+          if(valid){
+            if(_this.dialogTitle == '编辑员工'){
+              for(var i in _this.emp){
+                _this.edit[i] = (_this.emp[i] == _this.edit[i] ? '' : _this.emp[i]);
+              }
+              _this.edit.idCard = _this.emp.idCard;
+              _this.postRequest("/employee/edit", _this.edit).then(resp=> {
+                if(resp && resp.status ==200){
+                  let data = resp.data;
+                  if(data.status == 200){
+                    this.$message("操作成功");
+                  }else {
+                    this.$message("操作失败,请重试");
+                  }
                 }
               })
-            } else {
-              this.tableLoading = true;
-              this.postRequest("/employee/basic/emp", this.emp).then(resp=> {
-                _this.tableLoading = false;
-                if (resp && resp.status == 200) {
-                  var data = resp.data;
-                  _
-                  _this.dialogVisible = false;
-                  _this.emptyEmpData();
-                  _this.loadEmps();
+            }else {
+              _this.postRequest("/employee/delete", _this.emp).then(resp=> {
+                if(resp && resp.status ==200){
+                  let data = resp.data;
+                  if(data.status == 200){
+                    this.$message("操作成功");
+                  }else {
+                    this.$message("操作失败,请重试");
+                  }
                 }
               })
             }
-          } else {
-            return false;
+            this.loadEmps();
+            this.dialogVisible = false;
           }
         });
       },
       cancelEidt(){
         this.dialogVisible = false;
-        this.emptyEmpData();
-      },
-      initData(){
-        var _this = this;
-        this.getRequest("/employee/basic/data").then(resp=> {
-          if (resp && resp.status == 200) {
-            var data = resp.data;
-            _this.nations = data.nations;
-            _this.politics = data.politics;
-          }
-        })
+        this.emptyData();
       },
       showEditEmpView(row){
-        console.log(row)
+        this.emptyData();
         this.dialogTitle = "编辑员工";
-        this.emp = row;
+        for(var i in row){
+          this.emp[i] = row[i];
+        }
         this.emp.birthday = this.formatDate(row.birthday);
-        this.emp.nationId = row.nation.id;
-        this.emp.politicId = row.politicsStatus.id;
+        this.disable = true;
         this.dialogVisible = true;
+        for(let i in this.emp){
+          this.edit[i] = this.emp[i];
+        }
       },
       showAddEmpView(){
+        this.emptyData();
         this.dialogTitle = "添加员工";
+        this.disable = false;
         this.dialogVisible = true;
       },
-      emptyEmpData(){
+      emptyData(){
         this.emp = {
           name: '',
           gender: '',
           birthday: '',
           wedlock: '',
-          nationId: '',
+          nation: '',
           nativePlace: '',
-          politicId: '',
+          politic: '',
           email: '',
           phone: '',
           address: ''

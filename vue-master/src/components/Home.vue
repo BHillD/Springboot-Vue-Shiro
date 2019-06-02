@@ -28,8 +28,8 @@
                     <i :class="item.iconCls" style="color: #20a0ff;width: 14px;"></i>
                     <span slot="title">{{item.name}}</span>
                   </template>
-                  <el-menu-item width="180px"
-                                style="padding-left: 30px;padding-right:0px;margin-left: 0px;width: 170px;text-align: left"
+                  <el-menu-item 
+                                style="padding-left: 30px;padding-right:0px;margin-left: 0px;width: 100%;text-align: left"
                                 v-for="child in item.children"
                                 :index="child.path"
                                 :key="child.path">{{child.name}}
@@ -67,6 +67,7 @@
               _this.getRequest("/auth/logout");
               _this.$store.commit('logout');
               _this.$router.replace({path: '/'});
+              _this.$message("注销成功");
             }).catch(() => {
               _this.$message({
               type: 'info',

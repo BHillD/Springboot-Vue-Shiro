@@ -44,6 +44,7 @@ export default {
                     if(data.status == 200){
                         _this.$store.commit('login', data.obj);
                         var path = _this.$route.query.redirect;
+                        _this.$message("登录成功");
                         _this.$router.replace({path: '/Home'});
                     } else {
                         _this.$message(data.msg);

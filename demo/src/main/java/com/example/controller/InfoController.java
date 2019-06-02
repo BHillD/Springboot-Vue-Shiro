@@ -27,7 +27,7 @@ public class InfoController {
      * @return 返回当前用户可用的菜单数据
      */
     @GetMapping("/menu")
-    public JSONObject Menu(){
+    public JSONObject menu(){
         return Response.ok(menuService.getMenusByUserId());
     }
 }

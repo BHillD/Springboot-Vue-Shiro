@@ -21,6 +21,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginService{
 
+    /**
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @return 登录成功返回用户信息，登录失败返回错误信息
+     */
     public JSONObject login(String username, String password) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username,password);
@@ -37,7 +43,10 @@ public class LoginService{
         }
     }
 
-
+    /**
+     * 进行注销操作
+     * @return
+     */
     public JSONObject logout() {
         try {
             Subject subject = SecurityUtils.getSubject();

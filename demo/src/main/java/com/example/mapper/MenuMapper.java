@@ -13,10 +13,5 @@ import java.util.List;
 
 public interface MenuMapper {
 
-    /**
-     * 通过用户ID查询菜单
-     * @param id 用户ID
-     * @return 返回用户可查看的菜单资源
-     */
     List<Menu> getMenusByUserId(Integer id);
 }
