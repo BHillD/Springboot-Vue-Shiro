@@ -2,7 +2,7 @@
   <div>
     <el-container class="home-container">
       <el-header class="home-header">
-        <span class="home_title">Vue</span>
+        <span class="home_title">人事管理</span>
         <div style="display: flex;align-items: center;margin-right: 7px">
           <el-dropdown @command="handleCommand">
   <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
