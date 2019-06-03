@@ -1,5 +1,6 @@
 package com.example.config;
 
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,9 +16,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ShiroConfig {
 
+    @Bean("credentialsMatcher")
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        hashedCredentialsMatcher.setHashAlgorithmName("md5");
+        hashedCredentialsMatcher.setHashIterations(1);
+        return hashedCredentialsMatcher;
+    }
+
     @Bean("realm")
-    public Realm getRealm() {
-        return new Realm();
+    public Realm getRealm(@Qualifier("credentialsMatcher") HashedCredentialsMatcher credentialsMatcher) {
+        Realm realm = new Realm();
+        realm.setCredentialsMatcher(credentialsMatcher);
+        return realm;
     }
 
     @Bean("defaultSecurityManager")

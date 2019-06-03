@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.EmployeeMapper">
-    <resultMap id="BaseResultMap" type="com.example.model.Employee">
+    <resultMap id="Employee" type="com.example.model.Employee">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="gender" property="gender"/>
@@ -16,6 +16,28 @@
         <result column="address" property="address"/>
         <result column="nation" property="nation"/>
         <result column="politic" property="politic"/>
+    </resultMap>
+
+    <resultMap id="EmpSalary" type="com.example.model.EmpSalary">
+        <result column="eid"   property="id"/>
+        <result column="ename" property="name"/>
+        <result column="ephone" property="phone"/>
+        <result column="email" property="email"/>
+        <association property="salary" javaType="com.example.model.Salary">
+            <result column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="basicSalary" property="basicSalary"/>
+            <result column="bonus" property="bonus"/>
+            <result column="lunchSalary" property="lunchSalary"/>
+            <result column="trafficSalary" property="trafficSalary"/>
+            <result column="allSalary" property="allSalary"/>
+            <result column="pensionBase" property="pensionBase"/>
+            <result column="pensionPer" property="pensionPer"/>
+            <result column="medicalBase" property="medicalBase"/>
+            <result column="medicalPer" property="medicalPer"/>
+            <result column="accumulationFundBase" property="accumulationFundBase"/>
+            <result column="accumulationFundPer" property="accumulationFundPer"/>
+        </association>
     </resultMap>
     <update id="editEmployee" parameterType="com.example.model.Employee">
         update employee
@@ -58,7 +80,7 @@
     </update>
 
 
-    <select id="getEmployeeByPage" resultMap="BaseResultMap">
+    <select id="getEmployeeByPage" resultMap="Employee">
         select employee.* from employee where  employee.name like concat('%',#{keywords},'%')
         <if test="start!= null and size!= null">
             order by employee.id limit #{start},#{size}
@@ -79,4 +101,12 @@
             #{idCard}
         </foreach>
     </delete>
+
+    <select id="getEmpSalariesByPage" resultMap="EmpSalary">
+        SELECT employee.name AS ename,employee.id AS eid,employee.email AS email,employee.phone AS ephone,salary.*
+        FROM(employee_salary LEFT JOIN employee ON employee.id = employee_salary.eid) LEFT JOIN salary ON(salary.id = employee_salary.`sid`)
+        <if test="start!= null and size!= null">
+            order by eid limit #{start},#{size}
+        </if>
+    </select>
 </mapper>

@@ -20,12 +20,6 @@
         width="120">
       </el-table-column>
       <el-table-column
-        prop="workID"
-        width="120"
-        align="left"
-        label="工号">
-      </el-table-column>
-      <el-table-column
         prop="email"
         width="200"
         align="left"
@@ -35,12 +29,6 @@
         prop="phone"
         width="120"
         label="电话号码">
-      </el-table-column>
-      <el-table-column
-        prop="department.name"
-        align="left"
-        width="120"
-        label="所属部门">
       </el-table-column>
       <el-table-column label="工资账套" align="center">
         <template slot-scope="scope">
@@ -142,7 +130,7 @@
       }
     },
     mounted: function () {
-      // this.loadEmps();
+       this.loadEmps();
     },
     methods: {
       showUpdateView(data){
@@ -157,21 +145,21 @@
       },
       loadSalaries(){
         var _this = this;
-        this.getRequest("/salary/sobcfg/salaries").then(resp=> {
+        this.getRequest("/salary/accountset").then(resp=> {
           if (resp && resp.status == 200) {
-            _this.salaries = resp.data;
+            _this.salaries = resp.data.salaries;
           }
         })
       },
       updateSalaryCfg(eid){
         var _this = this;
-        if(this.osid==this.sid) {
+        if(_this.osid == _this.sid) {
           return;
         }
-        this.putRequest("/salary/sobcfg/", {eid: eid, sid: this.sid}).then(resp=> {
+        
+        _this.getRequest("/salary/edit?eid="+ eid +"&sid="+_this.sid).then(resp=> {
           if(resp&&resp.status==200) {
             var data = resp.data;
-            _
             _this.loadEmps();
           }
         })
@@ -183,11 +171,11 @@
       loadEmps(){
         this.tableLoading = true;
         var _this = this;
-        this.getRequest("/salary/sobcfg/emp?page=" + this.currentPage + "&size=10").then(resp=> {
+        this.getRequest("/employee/empsalary?page=" + this.currentPage + "&size=10").then(resp=> {
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _this.emps = data.emps;
+            _this.emps = data.empsalaries;
             _this.totalCount = data.count;
           }
         })

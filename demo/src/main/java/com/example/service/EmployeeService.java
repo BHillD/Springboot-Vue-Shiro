@@ -2,7 +2,10 @@ package com.example.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.mapper.EmployeeMapper;
+import com.example.mapper.SalaryMapper;
+import com.example.model.EmpSalary;
 import com.example.model.Employee;
+import com.example.model.Salary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +30,7 @@ public class EmployeeService{
      * @param page 当前页数
      * @param size 页面长度 默认为10
      * @param keywords 模糊查询关键字 默认为空
-     * @return 返回由当前页数据
+     * @return 返回由当前页的员工数据
      */
     public List<Employee> getEmployeeByPage(Integer page, Integer size, String keywords) {
         Integer start = (page - 1) * size;
@@ -38,7 +41,7 @@ public class EmployeeService{
     /**
      *
      * @param keywords 模糊查询关键字 默认为空
-     * @return 返回总页数
+     * @return 返回员工信息总页数
      */
     public Integer getCountByKeywords(String keywords) {
 
@@ -72,4 +75,16 @@ public class EmployeeService{
         System.out.println(e.toString());
         employeeMapper.editEmployee(e);
     }
+
+    /**
+     *
+     * @param page 当前页数
+     * @param size 每页数量
+     * @return
+     */
+    public List<EmpSalary> getEmpSalariesByPage(Integer page, Integer size) {
+        Integer start = (page - 1) * size;
+        return employeeMapper.getEmpSalariesByPage(start, size);
+    }
+
 }

@@ -23,24 +23,6 @@ public class Employee {
     private String phone;
     private String address;
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", gender='" + gender + '\'' +
-                ", birthday=" + birthday +
-                ", idCard='" + idCard + '\'' +
-                ", wedlock='" + wedlock + '\'' +
-                ", nation='" + nation + '\'' +
-                ", nativePlace='" + nativePlace + '\'' +
-                ", politic='" + politic + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
-
     public Integer getId() {
         return id;
     }

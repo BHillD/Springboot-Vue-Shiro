@@ -1,5 +1,6 @@
 package com.example.mapper;
 
+import com.example.model.EmpSalary;
 import com.example.model.Employee;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,4 +26,7 @@ public interface EmployeeMapper {
     void deleteEmployee(@Param("idCards") String[] idCards);
 
     void editEmployee(@Param("employee") Employee e);
+
+    List<EmpSalary> getEmpSalariesByPage(@Param("start") Integer start, @Param("size") Integer size);
+
 }
