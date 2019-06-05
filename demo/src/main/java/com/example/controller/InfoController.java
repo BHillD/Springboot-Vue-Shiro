@@ -1,8 +1,7 @@
 package com.example.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.service.MenuService;
-import com.example.utlis.CurrentUser;
+import com.example.service.InfoService;
 import com.example.utlis.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InfoController {
 
     @Autowired
-    MenuService menuService;
+    InfoService infoService;
 
     /**
      *
@@ -28,6 +27,16 @@ public class InfoController {
      */
     @GetMapping("/menu")
     public JSONObject menu(){
-        return Response.ok(menuService.getMenusByUserId());
+        return Response.ok(infoService.getMenusByUserId());
+    }
+
+    @GetMapping("/nations")
+    public  JSONObject getAllNations(){
+        return Response.ok(infoService.getAllNations());
+    }
+
+    @GetMapping("/politics")
+    public  JSONObject getAllPolitics(){
+        return Response.ok(infoService.getAllPolitics());
     }
 }

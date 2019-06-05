@@ -1,8 +1,11 @@
 package com.example.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.service.EmployeeService;
 import com.example.service.LoginService;
+import com.example.service.UserService;
 import com.example.utlis.Response;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +18,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-public class LoginController {
+public class AuthController {
 
     @Autowired
     LoginService loginService;
+    @Autowired
+    UserService userService;
 
 
     /**
@@ -37,6 +42,16 @@ public class LoginController {
         return Response.err("请输入账号密码后重试");
     }
 
+    @PostMapping("/regist")
+    public JSONObject regist(@RequestBody JSONObject obj){
+        String username = obj.getString("username");
+        String password = obj.getString("password");
+        String name = obj.getString("name");
+        Md5Hash md5Hash = new Md5Hash(password,username,1);
+        password = md5Hash.toString();
+        userService.registUser(username, password, name);
+        return Response.ok();
+    }
 
     /**
      * 进行注销操作

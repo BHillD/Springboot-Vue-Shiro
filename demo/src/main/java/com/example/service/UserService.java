@@ -5,6 +5,8 @@ import com.example.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
  * @author
@@ -25,5 +27,15 @@ public class UserService{
      */
     public User getUserByUsername(String username) {
         return userMapper.getUserByUsername(username);
+    }
+
+    public void registUser(String username, String password, String name){
+        String face = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1559736732420&di=ebd84f4d2e8a20946b9064be502560f8&imgtype=0&src=http%3A%2F%2Fwww.sccf.org.cn%2FUpLoads%2FHeadImg%2FUserHeadImg.png";
+        userMapper.addUser(username, password, name,face);
+        userMapper.addRole();
+    }
+
+    public List<User> getUsers(){
+        return userMapper.getUsers();
     }
 }

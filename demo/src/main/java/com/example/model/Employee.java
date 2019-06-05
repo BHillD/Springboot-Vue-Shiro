@@ -17,7 +17,7 @@ public class Employee {
     private String idCard;
     private String wedlock;
     private String nation;
-    private String nativePlace;
+    private Integer department;
     private String politic;
     private String email;
     private String phone;
@@ -79,20 +79,20 @@ public class Employee {
         this.nation = nation;
     }
 
+    public Integer getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Integer department) {
+        this.department = department;
+    }
+
     public String getPolitic() {
         return politic;
     }
 
     public void setPolitic(String politic) {
         this.politic = politic;
-    }
-
-    public String getNativePlace() {
-        return nativePlace;
-    }
-
-    public void setNativePlace(String nativePlace) {
-        this.nativePlace = nativePlace;
     }
 
     public String getEmail() {

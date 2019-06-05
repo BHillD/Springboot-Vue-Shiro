@@ -36,7 +36,7 @@ public class EmpController {
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(defaultValue = "") String keywords
-        ){
+    ){
         List<Employee> employeeByPage = employeeService.getEmployeeByPage(page, size, keywords);
         Integer count = employeeService.getCountByKeywords(keywords);
         JSONObject obj = new JSONObject();
@@ -52,14 +52,9 @@ public class EmpController {
      * @return
      */
     @PostMapping("/add")
-    @Transactional
     public JSONObject addEmp(@RequestBody JSONObject obj) throws Exception{
-        try{
             employeeService.addEmployee(obj);
             return Response.ok();
-        }catch (Exception e){
-            return Response.err("操作失败,请重试");
-        }
     }
 
     /**
@@ -69,7 +64,6 @@ public class EmpController {
      *
      */
     @PostMapping("/delete")
-    @Transactional
     public JSONObject delEmp(@RequestBody JSONObject obj) throws Exception{
         try{
             employeeService.deleteEmployee(obj);
@@ -86,7 +80,6 @@ public class EmpController {
      *
      */
     @PostMapping("/edit")
-    @Transactional
     public JSONObject editEmp(@RequestBody JSONObject obj) throws Exception{
         try{
             employeeService.editEmployee(obj);

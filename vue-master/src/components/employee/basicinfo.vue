@@ -74,9 +74,10 @@
               label="民族">
             </el-table-column>
             <el-table-column
-              prop="nativePlace"
               width="80"
-              label="籍贯">
+              align="left"
+              label="部门">
+              <template slot-scope="scope">{{ scope.row.department | formatDep}}</template>
             </el-table-column>
             <el-table-column
               prop="politic"
@@ -202,9 +203,16 @@
             </el-col>
             <el-col :span="5">
               <div>
-                <el-form-item label="籍贯:" prop="nativePlace">
-                  <el-input v-model="emp.nativePlace" size="mini" style="width: 120px" placeholder="员工籍贯"></el-input>
-                </el-form-item>
+                <el-form-item label="部门:" prop="department">
+                  <el-select v-model="emp.department" style="width: 150px" size="mini" placeholder="请选择部门">
+                    <el-option
+                      v-for="item in departments"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id">
+                    </el-option>
+                  </el-select>
+                 </el-form-item> 
               </div>
             </el-col>
             <el-col :span="6">
@@ -270,32 +278,18 @@
         keywords: '',
         disable: false,
         dialogTitle: '',
-        nations: [{
-          "id": 1,
-          "name": "汉族"
+        departments: [{
+          "id": 10,
+          "name": "人事部"
         },{
-          "id": 2,
-          "name": "藏族"
+          "id": 9,
+          "name": "市场部"
         },{
-          "id": 3,
-          "name": "蒙古族"
-        },{
-          "id": 4,
-          "name": "维吾尔族"
+          "id": 11,
+          "name": "运维部"
         }],
-        politics: [{
-          "id": 1,
-          "name": "群众"
-        },{
-          "id": 2,
-          "name": "共青团员"
-        },{
-          "id": 3,
-          "name": "预备党员"
-        },{
-          "id": 4,
-          "name": "中共党员"
-        }],
+        nations: [],
+        politics: [],
         multipleSelection: [],
         totalCount: -1,
         currentPage: 1,
@@ -309,7 +303,7 @@
           birthday: '',
           wedlock: '',
           nation: '',
-          nativePlace: '',
+          department: '',
           politic: '',
           email: '',
           phone: '',
@@ -322,7 +316,7 @@
           birthday: '',
           wedlock: '',
           nation: '',
-          nativePlace: '',
+          department: '',
           politic: '',
           email: '',
           phone: '',
@@ -334,7 +328,7 @@
           birthday: [{required: true, message: '必填:出生日期', trigger: 'blur'}],
           wedlock: [{required: true, message: '必填:婚姻状况', trigger: 'blur'}],
           nation: [{required: true, message: '必填:民族', trigger: 'blur'}],
-          nativePlace: [{required: true, message: '必填:籍贯', trigger: 'blur'}],
+          departments: [{required: true, message: '必填:部门', trigger: 'blur'}],
           politic: [{required: true, message: '必填:政治面貌', trigger: 'blur'}],
           email: [{required: true, message: '必填:电子邮箱', trigger: 'blur'}, {
             type: 'email',
@@ -349,9 +343,24 @@
     },
     mounted: function () {
       this.loadEmps();
+      this.loadData();
     },
     
     methods: {
+      loadData(){
+        this.getRequest("/info/nations").then(resp=> {
+          if(resp && resp.status ==200){
+            let data=resp.data;
+            this.nations = data.obj;
+          }
+        })
+        this.getRequest("/info/politics").then(resp=> {
+          if(resp && resp.status ==200){
+            let data=resp.data;
+            this.politics = data.obj;
+          }
+        })
+      },
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
@@ -361,11 +370,11 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          var idCards = '';
+          var id = '';
           for (var i = 0; i < this.multipleSelection.length; i++) {
-            idCards += this.multipleSelection[i].idCard + ",";
+            id += this.multipleSelection[i].id + ",";
           }
-          this.doDelete(idCards)
+          this.doDelete(id)
         }).catch(() => {
         });
       },
@@ -375,14 +384,14 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.doDelete(row.idCard);
+          this.doDelete(row.id);
         })
       },
-      doDelete(idCards){
+      doDelete(id){
         this.tableLoading = true;
         var _this = this;
         _this.postRequest("/employee/delete",{
-          "idCards": idCards
+          "id": id
         }).then(resp=> {
           if(resp && resp.status == 200){
             let data = resp.data;
@@ -443,7 +452,7 @@
                 }
               })
             }else {
-              _this.postRequest("/employee/delete", _this.emp).then(resp=> {
+              _this.postRequest("/employee/add", _this.emp).then(resp=> {
                 if(resp && resp.status ==200){
                   let data = resp.data;
                   if(data.status == 200){
@@ -455,7 +464,7 @@
               })
             }
             this.loadEmps();
-            this.dialogVisible = false;
+            this.dialogVisible=false;
           }
         });
       },

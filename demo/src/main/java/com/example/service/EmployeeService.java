@@ -6,6 +6,7 @@ import com.example.mapper.SalaryMapper;
 import com.example.model.EmpSalary;
 import com.example.model.Employee;
 import com.example.model.Salary;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,7 @@ public class EmployeeService{
      */
     public void addEmployee(JSONObject obj){
         Employee e = obj.toJavaObject(Employee.class);
+        System.out.println(e.toString());
         employeeMapper.addEmployee(e);
     }
 
@@ -62,7 +64,7 @@ public class EmployeeService{
      * @param obj 所选员工身份信息的JSON对象
      */
     public void deleteEmployee(JSONObject obj){
-        String[] idCards = obj.getString("idCards").split(",");
+        String[] idCards = obj.getString("id").split(",");
         employeeMapper.deleteEmployee(idCards);
     }
 

@@ -41,7 +41,11 @@ export const formatRoutes = (routes)=> {
                     require(['../components/personnel/' + component + '.vue'], resolve)
                   } else if (component.startsWith("manage")) {
                     require(['../components/personnel/' + component + '.vue'], resolve)
-                  }
+                  } else if(component.startsWith("account")) {
+                    require(['../components/personnel/' + component + '.vue'], resolve)
+                  } else if(component.startsWith("users")) {
+                    require(['../components/system/' + component + '.vue'], resolve)
+                  } 
             },
             name: name,
             iconCls: iconCls,

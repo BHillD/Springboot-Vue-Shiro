@@ -40,7 +40,6 @@ public class SalaryController {
      *
      */
     @GetMapping("/edit")
-    @Transactional
     public JSONObject editEmpSalary(
             @RequestParam("eid") Integer eid,
             @RequestParam("sid") Integer sid

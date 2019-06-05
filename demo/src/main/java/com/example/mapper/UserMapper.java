@@ -1,6 +1,9 @@
 package com.example.mapper;
 
 import com.example.model.User;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author
@@ -11,5 +14,12 @@ import com.example.model.User;
 
 public interface UserMapper {
 
-    User getUserByUsername(String username);
+    List<User> getUsers();
+
+    User getUserByUsername(@Param("username") String username);
+
+    void addRole();
+
+    void addUser(@Param("usernaeme") String username,@Param("password") String password,@Param("name") String name,@Param("face") String face);
+
 }

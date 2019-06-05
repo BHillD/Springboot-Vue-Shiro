@@ -23,10 +23,11 @@ public interface EmployeeMapper {
 
     void addEmployee(@Param("employee") Employee e);
 
-    void deleteEmployee(@Param("idCards") String[] idCards);
+    void deleteEmployee(@Param("id") String[] idCards);
 
     void editEmployee(@Param("employee") Employee e);
 
     List<EmpSalary> getEmpSalariesByPage(@Param("start") Integer start, @Param("size") Integer size);
+
 
 }

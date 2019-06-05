@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login  from '@/components/Login'
 import Home from '@/components/Home'
 
+
 Vue.use(Router)
 
 export default new Router({
@@ -14,7 +15,7 @@ export default new Router({
       hidden: true
     },
     {
-      path: '/Home',
+      path: '/home',
       name: 'Home',
       component: Home,
       hidden: true

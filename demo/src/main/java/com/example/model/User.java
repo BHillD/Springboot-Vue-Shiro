@@ -19,6 +19,28 @@ public class User {
 
     private Role role;
 
+    private String face;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", role=" + role +
+                ", face='" + face + '\'' +
+                '}';
+    }
+
+    public String getFace() {
+        return face;
+    }
+
+    public void setFace(String face) {
+        this.face = face;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -7,7 +7,7 @@
           <el-dropdown @command="handleCommand">
   <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
     {{user.name}}
-    <i><img v-if="user.userface!=''" :src="user.userface"
+    <i><img  v-if="user.userface!=''" :src="user.face"
             style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
   </span>
             <el-dropdown-menu slot="dropdown">

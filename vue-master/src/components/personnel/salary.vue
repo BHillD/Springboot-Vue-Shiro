@@ -100,7 +100,7 @@
             <el-button
               size="mini"
               slot="reference"
-              type="danger" @click="showUpdateView(scope.row)">修改账套
+              type="danger" @click="showUpdateView(scope.row)">修改
             </el-button>
           </el-popover>
         </template>
@@ -116,6 +116,7 @@
     </div>
   </div>
 </template>
+
 <script>
   export default {
     data(){

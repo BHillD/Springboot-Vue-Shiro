@@ -8,7 +8,8 @@ export default new Vuex.Store({
         user: {
             id: window.localStorage.getItem('user' || '[]') == null ? '-1' : JSON.parse(window.localStorage.getItem('user' || '[]')).id,
             name: window.localStorage.getItem('user' || '[]') == null ? '未登录' : JSON.parse(window.localStorage.getItem('user' || '[]')).name,
-            role: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).role
+            role: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).role,
+            face: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).face
           },
         routes: []
     },

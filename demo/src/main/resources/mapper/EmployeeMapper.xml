@@ -10,7 +10,7 @@
         <result column="birthday" property="birthday"/>
         <result column="idCard" property="idCard"/>
         <result column="wedlock" property="wedlock"/>
-        <result column="nativePlace" property="nativePlace"/>
+        <result column="department" property="department"/>
         <result column="email" property="email"/>
         <result column="phone" property="phone"/>
         <result column="address" property="address"/>
@@ -57,8 +57,8 @@
             <if test="employee.nation != null and employee.nation != ''">
                 nation = #{employee.nation},
             </if>
-            <if test="employee.nativePlace != null and employee.nativePlace != ''">
-                nativePlace = #{employee.nativePlace},
+            <if test="employee.department != null and employee.department != ''">
+                department = #{employee.department},
             </if>
             <if test="employee.politic != null and employee.politic != ''">
                 politic = #{employee.politic},
@@ -92,19 +92,18 @@
     </select>
 
     <insert id="addEmployee" parameterType="com.example.model.Employee">
-        insert into employee values (null,#{employee.name},#{employee.gender},#{employee.birthday},#{employee.idCard},#{employee.wedlock},#{employee.nation},#{employee.nativePlace},#{employee.politic},#{employee.email},#{employee.phone},#{employee.address})
+        insert into employee values (null,#{employee.name},#{employee.gender},#{employee.birthday},#{employee.idCard},#{employee.wedlock},#{employee.nation},#{employee.politic},#{employee.email},#{employee.phone},#{employee.address},#{employee.department})
     </insert>
 
     <delete id="deleteEmployee" parameterType="com.example.model.Employee">
-        delete from employee where idCard in
-        <foreach collection="idCards" separator="," open="(" close=")" item="idCard">
-            #{idCard}
+        delete from employee where id in
+        <foreach collection="id" separator="," open="(" close=")" item="id">
+            #{id}
         </foreach>
     </delete>
 
     <select id="getEmpSalariesByPage" resultMap="EmpSalary">
-        SELECT employee.name AS ename,employee.id AS eid,employee.email AS email,employee.phone AS ephone,salary.*
-        FROM(employee_salary LEFT JOIN employee ON employee.id = employee_salary.eid) LEFT JOIN salary ON(salary.id = employee_salary.`sid`)
+        SELECT employee.name AS ename,employee.id AS eid,employee.email AS email,employee.phone AS ephone,salary.* FROM employee LEFT JOIN salary ON employee.`department` = salary.`id` WHERE 'eid' != ''
         <if test="start!= null and size!= null">
             order by eid limit #{start},#{size}
         </if>
