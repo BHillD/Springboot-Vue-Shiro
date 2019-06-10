@@ -35,15 +35,11 @@ export const formatRoutes = (routes)=> {
                     require(['../components/' + component + '.vue'], resolve)
                   } else if (component.startsWith("basicinfo")) {
                     require(['../components/employee/' + component + '.vue'], resolve)
-                  } else if (component.startsWith("advanced")) {
-                    require(['../components/employee/' + component + '.vue'], resolve)
                   } else if (component.startsWith("salary")) {
-                    require(['../components/personnel/' + component + '.vue'], resolve)
-                  } else if (component.startsWith("manage")) {
                     require(['../components/personnel/' + component + '.vue'], resolve)
                   } else if(component.startsWith("account")) {
                     require(['../components/personnel/' + component + '.vue'], resolve)
-                  } else if(component.startsWith("users")) {
+                  } else if(component.startsWith("basic")) {
                     require(['../components/system/' + component + '.vue'], resolve)
                   } 
             },

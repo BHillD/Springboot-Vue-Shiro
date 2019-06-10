@@ -78,7 +78,7 @@ export default {
                     let data = resp.data;
                     if(data.status == 200){
                         this.$message("注册成功");
-                    }else {
+                    }else {W
                         this.$message("注册失败");
                     }
                 }

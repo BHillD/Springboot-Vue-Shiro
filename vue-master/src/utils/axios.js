@@ -19,4 +19,22 @@ export const getRequest = (url) => {
       url: `${base}${url}`
     });
   }
+
+export const putRequest = (url, params) => {
+    return axios({
+      method: 'put',
+      url: `${base}${url}`,
+      data: params,
+      headers: {
+        'Ccontent-Type': 'application/json;charset=UTF-8'
+      }
+    })
+}
+
+export const deleteRequest = (url) => {
+    return axios({
+      method: 'delete',
+      url: `${base}${url}`
+    })
+}
   

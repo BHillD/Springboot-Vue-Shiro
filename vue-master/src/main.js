@@ -7,6 +7,8 @@ import store from './store/index.js'
 import 'font-awesome/css/font-awesome.min.css'
 import {getRequest} from './utils/axios'
 import {postRequest} from './utils/axios'
+import {deleteRequest} from './utils/axios'
+import {putRequest} from './utils/axios'
 import ElementUi from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import {initMenu} from './utils/utils';
@@ -17,6 +19,8 @@ Vue.use(ElementUi);
 
 Vue.prototype.getRequest = getRequest;
 Vue.prototype.postRequest = postRequest;
+Vue.prototype.putRequest = putRequest;
+Vue.prototype.deleteRequest = deleteRequest;
 
 router.beforeEach((to,from,next) => {
   if(to.name == 'Login'){

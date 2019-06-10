@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.InfoMapper">
+    <resultMap id="Menu" type="com.example.model.Menu">
+        <id column="id" property="id" />
+        <result column="path" property="path" />
+        <result column="component" property="component" />
+        <result column="name" property="name" />
+        <result column="iconCls" property="iconCls" />
+        <result column="parentId" property="parentId" />
+        <association property="meta" javaType="com.example.model.Meta">
+            <result column="keepAlive" property="keepAlive" />
+            <result column="requireAuth" property="requireAuth"/>
+        </association>
+        <collection property="roles" ofType="com.example.model.Role">
+            <id column="rid" property="id"/>
+            <result column="rname" property="name"/>
+        </collection>
+        <collection property="children" ofType="com.example.model.Menu" >
+            <id column="id2" property="id"/>
+            <result column="path2" property="path" />
+            <result column="component2" property="component" />
+            <result column="name2" property="name" />
+            <result column="iconCls2" property="iconCls" />
+            <association property="meta" javaType="com.example.model.Meta">
+                <result column="keepAlive2" property="keepAlive" />
+                <result column="requireAuth2" property="requireAuth"/>
+            </association>
+        </collection>
+    </resultMap>
+    <select id="getMenusByUserId" parameterType="Integer" resultMap="Menu">
+        select m1.`id`,m1.`path`,m1.`component`,m1.`iconCls`,m1.`name`,m1.`requireAuth`,m2.`component` as component2,m2.`iconCls` as iconCls2,m2.`keepAlive` as keepAlive2,m2.`name` as name2,m2.`path` as path2,m2.`requireAuth` as requireAuth2
+        from menu m1,menu m2
+        where m1.`id`=m2.`parentId` and m1.`id`!=11
+        and m2.`id` in(select mr.`mid` from user_role u_r,role_menu mr where u_r.`roleid`=mr.`rid` and u_r.`userid`=#{userid})
+        order by m1.`id`,m2.`id`
+    </select>
+    <select id="getAllNations" resultType="com.example.model.Nation">
+        select * from nation
+    </select>
+    <select id="getAllpolitic" resultType="com.example.model.Politic">
+        select * from politic
+    </select>
+</mapper>

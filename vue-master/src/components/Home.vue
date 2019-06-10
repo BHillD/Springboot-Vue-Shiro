@@ -26,7 +26,7 @@
                 <el-submenu :key="index" :index="index+''">
                   <template slot="title">
                     <i :class="item.iconCls" style="color: #20a0ff;width: 14px;"></i>
-                    <span slot="title">{{item.name}}</span>
+                    <span>{{item.name}}</span>
                   </template>
                   <el-menu-item 
                                 style="padding-left: 30px;padding-right:0px;margin-left: 0px;width: 100%;text-align: left"
