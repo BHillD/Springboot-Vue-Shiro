@@ -10,8 +10,11 @@ import org.apache.shiro.SecurityUtils;
  */
 
 public class CurrentUser {
+
+    public static String USER = "user";
+
     public static User getCurrentUser(){
 
-        return (User) SecurityUtils.getSubject().getSession().getAttribute("user");
+        return (User) SecurityUtils.getSubject().getSession().getAttribute(USER);
     }
 }

@@ -39,8 +39,9 @@ public class AuthController {
         if(username != null && password != null){
             return loginService.login(username, password);
         }
-        return Response.err("请输入账号密码后重试");
+        return Response.err("账号或密码错误");
     }
+
 
     @PostMapping("/regist")
     public JSONObject regist(@RequestBody JSONObject obj){

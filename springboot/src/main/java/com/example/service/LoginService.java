@@ -36,7 +36,6 @@ public class LoginService{
             JSONObject obj = (JSONObject) JSON.toJSON(CurrentUser.getCurrentUser());
             obj.remove("username");
             obj.remove("password");
-            System.out.println(CurrentUser.getCurrentUser().toString());
             return Response.ok(obj);
         } catch (UnknownAccountException e){
             return Response.err("账号不存在");

@@ -22,9 +22,9 @@ public class Realm extends AuthorizingRealm {
     @Autowired
     UserService userService;
 
+    
+
     @Override
-
-
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String username = (String)principals.getPrimaryPrincipal();
         User user = userService.getUserByUsername(username);

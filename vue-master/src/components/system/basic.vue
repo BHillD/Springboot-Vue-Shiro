@@ -4,7 +4,7 @@
       <el-tab-pane label="部门管理" name="depMana">
         <dep-mana></dep-mana>
       </el-tab-pane>
-      <el-tab-pane label="权限组" name="menuRole">
+      <el-tab-pane label="角色管理" name="menuRole">
         <menu-role></menu-role>
       </el-tab-pane>
     </el-tabs>
