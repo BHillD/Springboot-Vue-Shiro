@@ -1,29 +1,23 @@
 <template>
   <div>
     <div style="text-align: left" v-loading="loading">
-      <el-input placeholder="请输入角色英文名称..."
-                size="mini"
-                style="width: 250px"
-                v-model="newRole">
-        <template slot="prepend">ROLE_</template>
-      </el-input>
       <el-input
-        placeholder="请输入角色中文名称..."
+        placeholder="请输入角色名称..."
         size="mini"
         style="width: 250px"
-        v-model="newRoleZh">
+        v-model="newRole">
       </el-input>
-      <el-button type="primary" size="mini" style="margin-left: 5px" @click="addNewRole">添加角色</el-button>
+      <el-button type="primary" size="mini" style="margin-left: 5px" @click="doAddRole">添加角色</el-button>
     </div>
     <div style="margin-top: 10px;text-align: left">
       <el-collapse v-model="activeColItem" accordion style="width: 500px;" @change="collapseChange">
-        <el-collapse-item v-for="(item,index) in roles" :title="item.nameZh" :name="item.id" :key="item.name">
+        <el-collapse-item v-for="(item,index) in roles" :title="item.name" :name="item.id" :key="item.name">
           <el-card class="box-card">
             <div slot="header">
               <span>可访问的资源</span>
               <el-button type="text"
                          style="color: #f6061b;margin: 0px;float: right; padding: 3px 0;width: 15px;height:15px"
-                         icon="el-icon-delete" @click="deleteRole(item.id,item.nameZh)"></el-button>
+                         icon="el-icon-delete" @click="deleteRole(item.id,item.name)"></el-button>
             </div>
             <div>
               <el-tree :props="props"
@@ -33,8 +27,7 @@
                        node-key="id"
                        ref="tree"
                        show-checkbox
-                       highlight-current
-                       @check-change="handleCheckChange">
+                       highlight-current>
               </el-tree>
             </div>
             <div style="display: flex;justify-content: flex-end;margin-right: 10px">
@@ -62,7 +55,7 @@
           type: 'warning'
         }).then(() => {
           _this.loading = true;
-          _this.deleteRequest("/system/basic/role/" + rid).then(resp=> {
+          _this.deleteRequest("/system/role/" + rid).then(resp=> {
             if (resp && resp.status == 200) {
               _this.initRoles();
             } else {
@@ -76,27 +69,22 @@
           });
         });
       },
-      addNewRole(){
-        if (isNotNullORBlank(this.newRole, this.newRoleZh)) {
+      doAddRole(){
           this.loading = true;
           var _this = this;
-          this.postRequest("/system/basic/addRole", {
-            role: this.newRole,
-            roleZh: this.newRoleZh
+          this.postRequest("/system/role", {
+            name: _this.newRole,
           }).then(resp=> {
             if (resp && resp.status == 200) {
               var data = resp.data;
-              _
               _this.initRoles();
               _this.newRole = '';
-              _this.newRoleZh = '';
+              _this.loading = false;
             } else {
               _this.loading = false;
             }
           })
-        }
       },
-
       updateRoleMenu(index){
         var checkedKeys = this.$refs.tree[index].getCheckedKeys(true);
         var _this = this;
@@ -114,23 +102,20 @@
           return;
         }
         var _this = this;
-        this.getRequest("/system/basic/menuTree/" + activeName).then(resp=> {
+        this.getRequest("/system/menutree/" + activeName).then(resp=> {
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _this.treeData = data.menus;
-            _this.checkedKeys = data.mids;
+            _this.treeData = data.tree;
+            _this.checkedKeys = data.menus;
           }
         })
       },
-      handleCheckChange(data, checked, indeterminate) {
-//        console.log(data,checked,indeterminate)
-      },
       initRoles(){
         var _this = this;
-        this.getRequest("/system/basic/roles").then(resp=> {
+        this.getRequest("/system/roles").then(resp=> {
           _this.loading = false;
           if (resp && resp.status == 200) {
-            _this.roles = resp.data;
+            _this.roles = resp.data.obj;
             _this.activeColItem=-1
           }
         })
@@ -146,7 +131,6 @@
           children: 'children'
         },
         newRole: '',
-        newRoleZh: '',
         roles: [],
         treeData: [],
         checkedKeys: [],

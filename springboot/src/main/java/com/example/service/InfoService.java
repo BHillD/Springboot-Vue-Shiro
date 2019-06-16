@@ -1,10 +1,8 @@
 package com.example.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.mapper.InfoMapper;
-import com.example.model.Menu;
-import com.example.model.Nation;
-import com.example.model.Politic;
-import com.example.model.Salary;
+import com.example.model.*;
 import com.example.utlis.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +36,48 @@ public class InfoService{
 
     public List<Politic> getAllPolitics(){
         return infoMapper.getAllpolitic();
+    }
+
+    public List<Department> getDepsById(Integer id){
+        return infoMapper.getDepsById(id);
+    }
+
+    public List<Department> getAllDeps(){
+        return infoMapper.getAllDeps();
+    }
+
+    public List<Integer> getMenusByRoleId(Integer id){
+        return infoMapper.getMenusByRoleId(id);
+    }
+
+    public List<Role> getAllRoles(){
+        return infoMapper.getAllRoles();
+    }
+
+    public List<Menu> getMenuTree(){
+        return infoMapper.menuTree();
+    }
+
+    public void addDep(JSONObject obj){
+        Department d = obj.toJavaObject(Department.class);
+        infoMapper.addDep(d);
+    }
+
+    public void delDep(Integer id){
+        infoMapper.delDep(id);
+    }
+
+    public void addRole(JSONObject obj){
+        String name = obj.getString("name");
+        infoMapper.addRole(name);
+    }
+
+    public void delRole(Integer id){
+        infoMapper.delRole(id);
+    }
+
+    public List<User> getAllUsers(){
+        return infoMapper.getUsers();
     }
 
 }

@@ -1,8 +1,7 @@
 package com.example.mapper;
 
-import com.example.model.Menu;
-import com.example.model.Nation;
-import com.example.model.Politic;
+import com.example.model.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,11 +14,30 @@ import java.util.List;
 
 public interface InfoMapper {
 
-    List<Menu> getMenusByUserId(Integer id);
+    List<Menu> getMenusByUserId(@Param("userid") Integer id);
 
     List<Nation> getAllNations();
 
     List<Politic> getAllpolitic();
 
+    List<Department> getDepsById(@Param("id") Integer id);
+
+    List<Department> getAllDeps();
+
+    List<Integer> getMenusByRoleId(@Param("id") Integer id);
+
+    List<Menu> menuTree();
+
+    List<Role> getAllRoles();
+
+    void addDep(@Param("department") Department d);
+
+    void delDep(@Param("id") Integer id);
+
+    void addRole(@Param("name") String name);
+
+    void delRole(@Param("id") Integer id);
+
+    List<User> getUsers();
 
 }

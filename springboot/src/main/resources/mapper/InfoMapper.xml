@@ -28,8 +28,29 @@
                 <result column="keepAlive2" property="keepAlive" />
                 <result column="requireAuth2" property="requireAuth"/>
             </association>
+            <collection property="children" ofType="com.example.model.Menu">
+                <id column="id3" property="id"/>
+                <result column="name3" property="name"/>
+            </collection>
         </collection>
     </resultMap>
+
+    <insert id="addDep" parameterType="com.example.model.Department">
+        insert into department values (null,#{department.name},#{department.parentId})
+    </insert>
+
+    <insert id="addRole">
+        insert into role values (null ,#{name})
+    </insert>
+
+    <delete id="delDep">
+        delete  from department where id = #{id}
+    </delete>
+
+    <delete id="delRole">
+        delete  from role where id = #{id}
+    </delete>
+
     <select id="getMenusByUserId" parameterType="Integer" resultMap="Menu">
         select m1.`id`,m1.`path`,m1.`component`,m1.`iconCls`,m1.`name`,m1.`requireAuth`,m2.`component` as component2,m2.`iconCls` as iconCls2,m2.`keepAlive` as keepAlive2,m2.`name` as name2,m2.`path` as path2,m2.`requireAuth` as requireAuth2
         from menu m1,menu m2
@@ -37,10 +58,59 @@
         and m2.`id` in(select mr.`mid` from user_role u_r,role_menu mr where u_r.`roleid`=mr.`rid` and u_r.`userid`=#{userid})
         order by m1.`id`,m2.`id`
     </select>
+
     <select id="getAllNations" resultType="com.example.model.Nation">
         select * from nation
     </select>
+
     <select id="getAllpolitic" resultType="com.example.model.Politic">
         select * from politic
     </select>
+
+    <resultMap id="Department" type="com.example.model.Department">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="parentid" property="parentId"/>
+        <collection property="children" ofType="com.example.model.Department" select="com.example.mapper.InfoMapper.getDepsById" column="id"/>
+    </resultMap>
+
+    <select id="getDepsById" resultMap="Department" parameterType="integer">
+        select d.* from department as d where d.parentId = #{id}
+    </select>
+
+
+    <select id="getAllDeps" resultType="com.example.model.Department">
+        select d.id,d.name from department as d
+    </select>
+
+    <select id="getMenusByRoleId" resultType="java.lang.Integer" parameterType="integer">
+        select mid from role_menu where rid = #{id}
+    </select>
+
+    <select id="menuTree" resultMap="Menu">
+            select m1.`id`,m1.`name`,m2.`id` as id2,m2.`name` as name2,m3.`id` as id3,m3.`name` as name3 from menu m1,menu m2,menu m3 where m1.`id`=m2.`parentId` and m2.`id`=m3.`parentId`
+    </select>
+
+    <select id="getAllRoles" resultType="com.example.model.Role">
+            select * from role where id != 101
+    </select>
+
+    <resultMap id="User" type="com.example.model.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="face" column="face"/>
+        <association property="role" javaType="com.example.model.Role">
+            <id column="rid" property="id"/>
+            <result column="rname" property="name"/>
+        </association>
+    </resultMap>
+
+
+    <select id="getUsers" resultMap="User">
+        SELECT r.id AS rid ,u.name,u.id,r.name AS rname FROM user_role AS ur LEFT JOIN role AS r ON r.`id` = ur.`roleid` LEFT JOIN USER AS u ON u.`id` = ur.`userid`
+    </select>
+
+
 </mapper>

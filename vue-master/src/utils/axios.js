@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-let base = '';
+let base = '/api';
 
 export const postRequest = (url, params) => {
     return axios({
@@ -26,7 +26,7 @@ export const putRequest = (url, params) => {
       url: `${base}${url}`,
       data: params,
       headers: {
-        'Ccontent-Type': 'application/json;charset=UTF-8'
+        'Content-Type': 'application/json;charset=UTF-8'
       }
     })
 }

@@ -2,6 +2,7 @@ package com.example.utlis;
 
 import com.example.model.User;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 
 /**
  * @author
@@ -14,7 +15,10 @@ public class CurrentUser {
     public static String USER = "user";
 
     public static User getCurrentUser(){
-
         return (User) SecurityUtils.getSubject().getSession().getAttribute(USER);
+    }
+
+    public static Session getCurrentSession(){
+        return SecurityUtils.getSubject().getSession();
     }
 }

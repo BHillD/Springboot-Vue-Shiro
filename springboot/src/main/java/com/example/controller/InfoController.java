@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.service.InfoService;
 import com.example.utlis.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author
@@ -27,7 +25,6 @@ public class InfoController {
      */
     @GetMapping("/menu")
     public JSONObject menu(){
-        System.out.println(infoService.getMenusByUserId());
         return Response.ok(infoService.getMenusByUserId());
     }
 
@@ -39,5 +36,27 @@ public class InfoController {
     @GetMapping("/politics")
     public  JSONObject getAllPolitics(){
         return Response.ok(infoService.getAllPolitics());
+    }
+
+    @GetMapping("/dep/{id}")
+    public  JSONObject getDepsById(@PathVariable("id") Integer id){
+        return Response.ok(infoService.getDepsById(id));
+    }
+
+    @GetMapping("/deps")
+    public JSONObject getAllDeps(){
+        return Response.ok(infoService.getAllDeps());
+    }
+
+    @PostMapping("/dep")
+    public JSONObject addDep(@RequestBody JSONObject obj){
+        infoService.addDep(obj);
+        return Response.ok();
+    }
+
+    @DeleteMapping("/dep/{id}")
+    public JSONObject delDep(@PathVariable("id") Integer id){
+        infoService.delDep(id);
+        return Response.ok();
     }
 }
