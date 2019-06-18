@@ -9,6 +9,7 @@ import com.example.model.Salary;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -51,11 +52,10 @@ public class EmployeeService{
 
     /**
      * 添加新员工信息
-     * @param obj 新员工信息的JSON对象
+     * @param e 新员工信息的实体对象
      */
-    public void addEmployee(JSONObject obj){
-        Employee e = obj.toJavaObject(Employee.class);
-        System.out.println(e.toString());
+    @Transactional
+    public void addEmployee(Employee e) throws Exception{
         employeeMapper.addEmployee(e);
     }
 
@@ -63,8 +63,8 @@ public class EmployeeService{
      * 删除员工信息
      * @param obj 所选员工身份信息的JSON对象
      */
-    public void deleteEmployee(JSONObject obj){
-        String[] idCards = obj.getString("id").split(",");
+    @Transactional
+    public void deleteEmployee(String[] idCards) throws Exception{
         employeeMapper.deleteEmployee(idCards);
     }
 
@@ -72,7 +72,8 @@ public class EmployeeService{
      * 修改员工信息
      * @param obj 所选员工的修改信息的JSON对象
      */
-    public void editEmployee(JSONObject obj){
+    @Transactional
+    public void editEmployee(JSONObject obj) throws Exception{
         Employee e = obj.toJavaObject(Employee.class);
         System.out.println(e.toString());
         employeeMapper.editEmployee(e);

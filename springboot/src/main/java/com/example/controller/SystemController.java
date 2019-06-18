@@ -6,7 +6,9 @@ import com.example.model.Menu;
 import com.example.service.InfoService;
 import com.example.service.UserService;
 import com.example.utlis.Response;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,36 +28,49 @@ public class SystemController {
     InfoService infoService;
 
     @GetMapping("/users")
-    public JSONObject getAllUsers(){
+    public ResponseEntity getAllUsers(){
         return Response.ok(infoService.getAllUsers());
     }
 
     @GetMapping("/roles")
-    public JSONObject getAllRoles(){
+    public ResponseEntity getAllRoles(){
         return Response.ok(infoService.getAllRoles());
     }
 
-    @GetMapping("/menutree/{id}")
-    public JSONObject menuTree(@PathVariable("id") Integer id){
+    @GetMapping("/menutree")
+    public ResponseEntity menuTree(@RequestParam("id") Integer id){
         List<Integer> menus = infoService.getMenusByRoleId(id);
         List<Menu> menutree = infoService.getMenuTree();
         JSONObject obj = new JSONObject();
-        System.out.println(menutree.toString());
-        System.out.println(menus.toString());
-        obj.put("menus",menus);
         obj.put("tree",menutree);
-        return obj;
+        obj.put("menus",menus);
+        return Response.ok(obj);
     }
 
     @PostMapping("/role")
-    public JSONObject addRole(@RequestBody JSONObject obj){
-        infoService.addRole(obj);
-        return Response.ok();
+    public ResponseEntity addRole(@RequestBody JSONObject obj){
+        String name = obj.getString("name");
+        if(name == null){
+            return Response.badReq();
+        }
+        try {
+            infoService.addRole(name);
+            return Response.ok();
+        }catch (Exception e){
+            return Response.err();
+        }
     }
 
-    @DeleteMapping("/role/{id}")
-    public JSONObject delRole(@PathVariable Integer id){
-        infoService.delRole(id);
-        return Response.ok();
+    @DeleteMapping("/role")
+    public ResponseEntity delRole(@RequestParam("id") Integer id){
+        if(id == null){
+            return Response.badReq();
+        }
+        try {
+            infoService.delRole(id);
+            return Response.ok();
+        }catch (Exception e){
+            return  Response.err();
+        }
     }
 }

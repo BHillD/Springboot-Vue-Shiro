@@ -18,7 +18,4 @@ public class CurrentUser {
         return (User) SecurityUtils.getSubject().getSession().getAttribute(USER);
     }
 
-    public static Session getCurrentSession(){
-        return SecurityUtils.getSubject().getSession();
-    }
 }

@@ -1,9 +1,12 @@
 package com.example.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.model.Salary;
 import com.example.service.SalaryService;
 import com.example.utlis.Response;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -26,35 +29,51 @@ public class SalaryController {
      * @return 返回全部工资账套
      */
     @GetMapping("/accountset")
-    public JSONObject getAllSalaries(){
-        JSONObject obj = new JSONObject();
-        obj.put("salaries", salaryService.getAllSalaries());
-        return obj;
+    public ResponseEntity getAllAccountset(){
+
+        return Response.ok(salaryService.getAllaccountset());
     }
 
-    @GetMapping("/add")
-    public JSONObject addSalary(@RequestBody JSONObject obj){
-        salaryService.addSalary(obj);
-        return Response.ok();
+    @PostMapping("/accountset")
+    public ResponseEntity addAccountset(@RequestBody JSONObject obj){
+
     }
 
-    /**
-     *
-     * @param eid 员工ID
-     * @param sid 工资账套ID
-     * @return
-     *
-     */
-    @GetMapping("/empsalary")
-    public JSONObject editEmpSalary(
-            @RequestParam("eid") Integer eid,
-            @RequestParam("sid") Integer sid
-    ) throws Exception{
+    @PutMapping("/accountset")
+    public ResponseEntity editAccountset(@RequestBody JSONObject obj){
+
+    }
+
+    @DeleteMapping("/ccountset")
+    public ResponseEntity delAccountset(@RequestParam("id") String id){
+
+    }
+
+    @PostMapping("/empsalary")
+    public ResponseEntity addSalary(@RequestBody JSONObject obj){
+        Salary salary = obj.toJavaObject(Salary.class);
+        try {
+            salaryService.addSalary(salary);
+            return Response.ok();
+        }catch (Exception e){
+            return Response.badReq();
+        }
+    }
+
+
+
+    @PutMapping("/empsalary")
+    public ResponseEntity editEmpSalary(@RequestBody JSONObject obj) throws Exception{
+        Integer eid = obj.getInteger("eid");
+        Integer sid = obj.getInteger("sid");
+        if(eid == null || sid == null){
+            return Response.badReq();
+        }
         try{
             salaryService.editEmpSalary(eid, sid);
             return Response.ok();
         }catch (Exception e){
-            return Response.err("操作失败,请重试");
+            return Response.err();
         }
     }
 }

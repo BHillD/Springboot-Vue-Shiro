@@ -315,49 +315,48 @@
       doDelete(id){
         var _this = this;
         _this.tableLoading = true;
-        this.deleteRequest("/salary/sob/salary/" + id).then(resp=>{
+        this.deleteRequest("/salary/accountset?id=" + id).then(resp=>{
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
-            var data = resp.data;
-            _
-            _this.loadSalaryCfg();
+            _this.$message("操作成功");
+          }else {
+            _this.$message("操作失败,请重试");
           }
         });
+        _this.loadSalaryCfg();
       },
       next(){
         var _this = this;
         if (this.index == 6) {
           if(this.salary.basicSalary&&this.salary.trafficSalary&&this.salary.lunchSalary&&this.salary.bonus&&this.salary.pensionBase&&this.salary.pensionPer&&this.salary.medicalBase&&this.salary.medicalPer&&this.salary.accumulationFundBase&&this.salary.accumulationFundPer){
-          if (this.salary.id) {//更新
+          if (this.salary.id) {
             _this.tableLoading = true;
-            this.putRequest("/salary/sob/salary", this.salary).then(resp=> {
+            this.putRequest("/salary/accountset", this.salary).then(resp=> {
               _this.tableLoading = false;
               if (resp && resp.status == 200) {
-                var data = resp.data;
-                _
-                _this.dialogVisible = false;
-                _this.index = 0;
-                _this.loadSalary();
+                _this.$message("操作成功");
+              }else {
+                _this.$message("操作失败,请重试");
               }
             });
-          } else {//添加
+          } else {
             this.$prompt('请输入账套名称', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消'
             }).then(({value}) => {
               this.salary.name = value;
-              this.postRequest("/salary/sob/salary", this.salary).then(resp=> {
+              this.postRequest("/salary/accountset", this.salary).then(resp=> {
                 if (resp && resp.status == 200) {
-                  var data = resp.data;
-                  _
-                  _this.dialogVisible = false;
-                  _this.index = 0;
-                  _this.loadSalary();
+                  _this.$message("操作成功");
+                }else {
+                  _this.$message("操作失败,请重试");
                 }
               });
-            }).catch(() => {
-            });
+            })
           }
+          _this.dialogVisible = false;
+          _this.index = 0;
+          _this.loadSalary();
           }else{
             this.$message({type: 'error', message: '字段不能为空!'});
           }
@@ -371,7 +370,7 @@
         this.getRequest("/salary/accountset").then(resp=> {
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
-            _this.salaries = resp.data.salaries;
+            _this.salaries = resp.data;
           }
         })
       },

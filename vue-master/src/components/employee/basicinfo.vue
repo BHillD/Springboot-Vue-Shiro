@@ -350,14 +350,12 @@
       loadData(){
         this.getRequest("/info/nations").then(resp=> {
           if(resp && resp.status ==200){
-            let data=resp.data;
-            this.nations = data.obj;
+            this.nations = resp.data;
           }
         })
         this.getRequest("/info/politics").then(resp=> {
           if(resp && resp.status ==200){
-            let data=resp.data;
-            this.politics = data.obj;
+            this.politics = resp.data;
           }
         })
       },
@@ -390,22 +388,14 @@
       doDelete(id){
         this.tableLoading = true;
         var _this = this;
-        _this.postRequest("/employee/delete",{
-          "id": id
-        }).then(resp=> {
+        _this.deleteRequest("/basic/employee?id=" + id).then(resp =>{
           if(resp && resp.status == 200){
-            let data = resp.data;
-            if(data.status == 200){
-              _this.$message("操作成功");
-            }else {
-              _this.$message("操作失败,请重试");
-            }
+            this.$message("操作成功");
           }else {
-            return false;
+            this.$message("操作失败,请重试");
           }
-          _this.loadEmps();
-          tableLoading = false;
         })
+        this.tableLoading = false;
       },
       keywordsChange(val){
         if (val == '') {
@@ -416,16 +406,16 @@
         this.loadEmps();
       },
       currentChange(currentChange){
-        this.currentPage = currentChange;
+        this.currentPage = currentChange; 
         this.loadEmps();
       },
       loadEmps(){
         var _this = this;
         this.tableLoading = true;
-        this.getRequest("/employee/basinfo?page=" + this.currentPage + "&size=10&keywords=" + this.keywords).then(resp=> {
+        this.getRequest("/basic/info?page=" + this.currentPage + "&size=10&keywords=" + this.keywords).then(resp=> {
           this.tableLoading = false;
           if (resp && resp.status == 200) {
-            var data = resp.data;
+            let data = resp.data;
             _this.emps = data.emps;
             _this.totalCount = data.count;
           }
@@ -441,26 +431,20 @@
                 _this.edit[i] = (_this.emp[i] == _this.edit[i] ? '' : _this.emp[i]);
               }
               _this.edit.idCard = _this.emp.idCard;
-              _this.postRequest("/employee/edit", _this.edit).then(resp=> {
+              _this.putRequest("/basic/employee", _this.edit).then(resp=> {
                 if(resp && resp.status ==200){
-                  let data = resp.data;
-                  if(data.status == 200){
                     this.$message("操作成功");
                   }else {
                     this.$message("操作失败,请重试");
                   }
-                }
               })
             }else {
-              _this.postRequest("/employee/add", _this.emp).then(resp=> {
+              _this.postRequest("/basic/employee", _this.emp).then(resp=> {
                 if(resp && resp.status ==200){
-                  let data = resp.data;
-                  if(data.status == 200){
                     this.$message("操作成功");
                   }else {
                     this.$message("操作失败,请重试");
                   }
-                }
               })
             }
             this.loadEmps();

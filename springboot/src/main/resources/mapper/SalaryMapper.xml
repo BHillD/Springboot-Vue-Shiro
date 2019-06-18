@@ -10,7 +10,7 @@
     </insert>
 
     <update id="editEmpSalary" parameterType="Integer">
-        update employee_salary set employee_salary.sid = #{sid} where employee_salary.eid = #{eid}
+        update employee set employee.department = #{sid} where employee.id = #{eid}
     </update>
 
     <update id="editSalary" parameterType="com.example.model.Salary">
@@ -57,7 +57,7 @@
     </update>
 
 
-    <select id="getAllSalaries" resultType="com.example.model.Salary">
+    <select id="getAllAccountset" resultType="com.example.model.Salary">
         select * from salary
     </select>
 </mapper>

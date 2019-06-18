@@ -1,6 +1,7 @@
 package com.example.config;
 
 import com.example.model.User;
+import com.example.service.InfoService;
 import com.example.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -10,6 +11,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 /**
  * @author
@@ -22,6 +25,9 @@ public class Realm extends AuthorizingRealm {
     @Autowired
     UserService userService;
 
+    @Autowired
+    InfoService infoService;
+
     
 
     @Override
@@ -29,7 +35,10 @@ public class Realm extends AuthorizingRealm {
         String username = (String)principals.getPrimaryPrincipal();
         User user = userService.getUserByUsername(username);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.addRole(user.getRole().getName());
+        List<Integer> menus = infoService.getMenusByRoleId(user.getRole().getId());
+        for (Integer i: menus) {
+            info.addStringPermission(i.toString());
+        }
         return info;
     }
 

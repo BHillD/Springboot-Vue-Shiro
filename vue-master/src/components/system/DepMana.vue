@@ -84,16 +84,16 @@
         var _this = this;
         this.getRequest("/info/deps").then(resp=> {
           if (resp && resp.status == 200) {
-            _this.allDeps = resp.data.obj;
+            _this.allDeps = resp.data;
           }
         })
       },
       loadTreeData(){
         var _this = this;
-        this.getRequest("/info/dep/-1").then(resp=> {
+        this.getRequest("/info/dep?id=-1").then(resp=> {
           _this.treeLoading = false;
           if (resp && resp.status == 200) {
-            _this.treeData = resp.data.obj;
+            _this.treeData = resp.data;
           }
         })
       },
@@ -107,9 +107,12 @@
         }).then(resp=> {
           _this.treeLoading = false;
           if (resp && resp.status == 200) {
-            _this.loadTreeData();
+            _this.$message("操作成功");
+          }else{
+            _this.$message("操作失败,请重试");
           }
         })
+        _this.loadTreeData();
       },
       showAddDepView(data, event){
         this.dialogVisible = true;
@@ -130,13 +133,15 @@
             type: 'warning'
           }).then(() => {
             _this.treeLoading = true;
-            _this.deleteRequest("/info/dep/" + data.id).then(resp=> {
+            _this.deleteRequest("/info/dep?id=" + data.id).then(resp=> {
               _this.treeLoading = false;
               if (resp && resp.status == 200) {
-                var respData = resp.data;
-                _this.loadTreeData();
+                _this.$message("操作成功");
+              }else{
+                _this.$message("操作失败,请重试");
               }
             });
+            _this.loadTreeData();
           }).catch(() => {
             _this.$message({
               type: 'info',

@@ -76,11 +76,9 @@ export default {
             this.postRequest("/auth/regist",this.registForm).then(response =>{
                 if(resp && resp.status == 200){
                     let data = resp.data;
-                    if(data.status == 200){
-                        this.$message("注册成功");
-                    }else {W
-                        this.$message("注册失败");
-                    }
+                    this.$message("注册成功");
+                }else {
+                    this.$message("注册失败");
                 }
                 this.dialogVisible=false;
             })
@@ -102,15 +100,12 @@ export default {
             }).then(resp => {
                 _this.loading = false;
                 if(resp && resp.status == 200) {
-                    var data = resp.data;
-                    if(data.status == 200){
-                        _this.$store.commit('login', data.obj);
-                        var path = _this.$route.query.redirect;
-                        _this.$message("登录成功");
-                        _this.$router.replace({path: '/Home'});
-                    } else {
-                        _this.$message(data.msg);
-                    }
+                    _this.$store.commit('login', resp.data);
+                    var path = _this.$route.query.redirect;
+                    _this.$message("登录成功");
+                    _this.$router.replace({path: '/Home'});
+                }else {
+                    _this.$message(resp.data);
                 }
             });
         }

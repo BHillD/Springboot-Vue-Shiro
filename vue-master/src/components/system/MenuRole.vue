@@ -55,7 +55,7 @@
           type: 'warning'
         }).then(() => {
           _this.loading = true;
-          _this.deleteRequest("/system/role/" + rid).then(resp=> {
+          _this.deleteRequest("/system/role?id=" + rid).then(resp=> {
             if (resp && resp.status == 200) {
               _this.initRoles();
             } else {
@@ -76,7 +76,6 @@
             name: _this.newRole,
           }).then(resp=> {
             if (resp && resp.status == 200) {
-              var data = resp.data;
               _this.initRoles();
               _this.newRole = '';
               _this.loading = false;
@@ -102,7 +101,7 @@
           return;
         }
         var _this = this;
-        this.getRequest("/system/menutree/" + activeName).then(resp=> {
+        this.getRequest("/system/menutree?id=" + activeName).then(resp=> {
           if (resp && resp.status == 200) {
             var data = resp.data;
             _this.treeData = data.tree;
@@ -115,7 +114,7 @@
         this.getRequest("/system/roles").then(resp=> {
           _this.loading = false;
           if (resp && resp.status == 200) {
-            _this.roles = resp.data.obj;
+            _this.roles = resp.data;
             _this.activeColItem=-1
           }
         })

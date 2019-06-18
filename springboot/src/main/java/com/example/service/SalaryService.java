@@ -5,6 +5,7 @@ import com.example.mapper.SalaryMapper;
 import com.example.model.Salary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,21 +23,20 @@ public class SalaryService {
      * 返回所有工资账套信息
      * @return
      */
-    public List<Salary> getAllSalaries(){
-        return salaryMapper.getAllSalaries();
+    public List<Salary> getAllaccountset(){
+        return salaryMapper.getAllAccountset();
     }
 
-    public void addSalary(JSONObject obj){
-        Salary salary = obj.toJavaObject(Salary.class);
+    @Transactional
+    public void addSalary(Salary salary) throws Exception{
         salaryMapper.addSalary(salary);
     }
 
     /**
      * 返回员工工资信息
-     * @param eid 员工ID
-     * @param sid 工资账套ID
      */
-    public void editEmpSalary(Integer eid,Integer sid){
+    @Transactional
+    public void editEmpSalary(Integer eid, Integer sid) throws Exception{
         salaryMapper.editEmpSalary(eid, sid);
     }
 }

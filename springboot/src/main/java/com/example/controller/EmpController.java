@@ -1,11 +1,13 @@
 package com.example.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.model.EmpSalary;
 import com.example.model.Employee;
 import com.example.service.EmployeeService;
 import com.example.utlis.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +21,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/basic")
 public class EmpController {
 
     @Autowired
@@ -31,18 +33,18 @@ public class EmpController {
      * @param keywords  用于查询的关键字 默认为空
      * @return 返回当前页的员工数据
      */
-    @GetMapping("/basinfo")
-    public JSONObject getEmployeeByPage(
-            @RequestParam(defaultValue = "1") Integer page,
-            @RequestParam(defaultValue = "10") Integer size,
-            @RequestParam(defaultValue = "") String keywords
+    @GetMapping("/info")
+    public ResponseEntity getEmployeeByPage(
+            @RequestParam(defaultValue = "1", name = "page") Integer page,
+            @RequestParam(defaultValue = "10", name = "size") Integer size,
+            @RequestParam(defaultValue = "", name = "keywordss") String keywords
     ){
         List<Employee> employeeByPage = employeeService.getEmployeeByPage(page, size, keywords);
         Integer count = employeeService.getCountByKeywords(keywords);
         JSONObject obj = new JSONObject();
         obj.put("emps", employeeByPage);
         obj.put("count", count);
-        return obj;
+        return Response.ok(obj);
     }
 
 
@@ -51,10 +53,15 @@ public class EmpController {
      * @param obj 含有新用户全部信息的JSON对象
      * @return
      */
-    @PostMapping("/add")
-    public JSONObject addEmp(@RequestBody JSONObject obj) throws Exception{
-            employeeService.addEmployee(obj);
+    @PostMapping("/employee")
+    public ResponseEntity addEmp(@RequestBody JSONObject obj){
+        try {
+            Employee e = obj.toJavaObject(Employee.class);
+            employeeService.addEmployee(e);
             return Response.ok();
+        }catch (Exception e){
+            return Response.badReq();
+        }
     }
 
     /**
@@ -63,13 +70,19 @@ public class EmpController {
      * @return
      *
      */
-    @PostMapping("/delete")
-    public JSONObject delEmp(@RequestBody JSONObject obj) throws Exception{
+    @DeleteMapping("/employee")
+    public ResponseEntity delEmp(@RequestParam("id") String id){
+        String[] idCards = id.split(",");
+        System.out.println(idCards);
+        System.out.println(10);
+        if(idCards == null){
+            return Response.badReq();
+        }
         try{
-            employeeService.deleteEmployee(obj);
+            employeeService.deleteEmployee(idCards);
             return Response.ok();
         }catch (Exception e){
-            return Response.err("操作失败,请重试");
+            return Response.err();
         }
     }
 
@@ -79,8 +92,8 @@ public class EmpController {
      * @return
      *
      */
-    @PostMapping("/edit")
-    public JSONObject editEmp(@RequestBody JSONObject obj) throws Exception{
+    @PutMapping("/employee")
+    public ResponseEntity editEmp(@RequestBody JSONObject obj) throws Exception{
         try{
             employeeService.editEmployee(obj);
             return Response.ok();
@@ -96,15 +109,15 @@ public class EmpController {
      * @return
      */
     @GetMapping("/empsalary")
-    public JSONObject getEmpSalariesByPage(
-            @RequestParam(defaultValue = "1") Integer page,
-            @RequestParam(defaultValue = "10") Integer size
+    public ResponseEntity getEmpSalariesByPage(
+            @RequestParam(defaultValue = "1", name = "page") Integer page,
+            @RequestParam(defaultValue = "10", name = "size") Integer size
     ){
         List<EmpSalary> empSalariesByPage = employeeService.getEmpSalariesByPage(page, size);
         Integer count = employeeService.getCountByKeywords("");
         JSONObject obj = new JSONObject();
         obj.put("empsalaries", empSalariesByPage);
         obj.put("count", count);
-        return obj;
+        return Response.ok(obj);
     }
 }

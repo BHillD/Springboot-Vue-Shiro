@@ -6,6 +6,7 @@ import com.example.model.*;
 import com.example.utlis.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -58,21 +59,23 @@ public class InfoService{
         return infoMapper.menuTree();
     }
 
-    public void addDep(JSONObject obj){
-        Department d = obj.toJavaObject(Department.class);
+    @Transactional
+    public void addDep(Department d) throws Exception{
         infoMapper.addDep(d);
     }
 
-    public void delDep(Integer id){
+    @Transactional
+    public void delDep(Integer id) throws Exception{
         infoMapper.delDep(id);
     }
 
-    public void addRole(JSONObject obj){
-        String name = obj.getString("name");
+    @Transactional
+    public void addRole(String name) throws Exception{
         infoMapper.addRole(name);
     }
 
-    public void delRole(Integer id){
+    @Transactional
+    public void delRole(Integer id) throws Exception{
         infoMapper.delRole(id);
     }
 

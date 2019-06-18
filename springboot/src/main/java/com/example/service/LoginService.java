@@ -28,33 +28,18 @@ public class LoginService{
      * @return 登录成功返回用户信息，登录失败返回错误信息
      */
 
-    public JSONObject login(String username, String password) {
+    public void login(String username, String password) throws UnknownAccountException,IncorrectCredentialsException{
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username,password);
-        try {
-            subject.login(token);
-            JSONObject obj = (JSONObject) JSON.toJSON(CurrentUser.getCurrentUser());
-            obj.remove("username");
-            obj.remove("password");
-            return Response.ok(obj);
-        } catch (UnknownAccountException e){
-            return Response.err("账号不存在");
-        } catch (IncorrectCredentialsException e){
-            return Response.err("账号或密码错误");
-        }
+        subject.login(token);
     }
 
     /**
      * 进行注销操作
      * @return
      */
-    public JSONObject logout() {
-        try {
-            Subject subject = SecurityUtils.getSubject();
-            subject.logout();
-            return Response.ok();
-        } catch (Exception e){
-            return Response.err("操作失败，请重试");
-        }
+    public void logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
     }
 }

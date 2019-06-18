@@ -22,6 +22,7 @@ Vue.prototype.postRequest = postRequest;
 Vue.prototype.putRequest = putRequest;
 Vue.prototype.deleteRequest = deleteRequest;
 
+
 router.beforeEach((to,from,next) => {
   if(to.name == 'Login'){
     next();

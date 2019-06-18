@@ -148,7 +148,7 @@
         var _this = this;
         this.getRequest("/salary/accountset").then(resp=> {
           if (resp && resp.status == 200) {
-            _this.salaries = resp.data.salaries;
+            _this.salaries = resp.data;
           }
         })
       },
@@ -158,12 +158,17 @@
           return;
         }
         
-        _this.getRequest("/salary/edit?eid="+ eid +"&sid="+_this.sid).then(resp=> {
-          if(resp&&resp.status==200) {
-            var data = resp.data;
-            _this.loadEmps();
+        _this.putRequest("/salary/empsalary",{
+          "eid" : eid,
+          "sid" :_this.sid
+        }).then(resp=> {
+          if(resp && resp.status==200) {
+            _this.$message("操作成功");
+          }else{
+            _this.$$message("操作失败,请重试");
           }
         })
+        _this.loadEmps();
       },
       currentChange(currentPage){
         this.currentPage = currentPage;
@@ -172,7 +177,7 @@
       loadEmps(){
         this.tableLoading = true;
         var _this = this;
-        this.getRequest("/employee/empsalary?page=" + this.currentPage + "&size=10").then(resp=> {
+        this.getRequest("/basic/empsalary?page=" + this.currentPage + "&size=10").then(resp=> {
           _this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;

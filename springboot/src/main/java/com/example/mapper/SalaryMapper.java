@@ -16,7 +16,7 @@ public interface SalaryMapper {
 
     void editSalary(@Param("salary") Salary salary);
 
-    List<Salary> getAllSalaries();
+    List<Salary> getAllAccountset();
 
     void editEmpSalary(@Param("eid") Integer eid, @Param("sid") Integer sid);
 }
