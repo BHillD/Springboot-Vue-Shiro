@@ -65,9 +65,9 @@ public class AuthController {
         String username = obj.getString("username");
         String password = obj.getString("password");
         String name = obj.getString("name");
-        if(username == null || password == null || name == null){
-            return Response.badReq();
-        }
+//        if(username == null || password == null || name == null){
+//            return Response.badReq();
+//        }
         try {
             userService.registUser(username, password, name);
             return Response.ok();

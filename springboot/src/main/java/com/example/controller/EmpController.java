@@ -37,7 +37,7 @@ public class EmpController {
     public ResponseEntity getEmployeeByPage(
             @RequestParam(defaultValue = "1", name = "page") Integer page,
             @RequestParam(defaultValue = "10", name = "size") Integer size,
-            @RequestParam(defaultValue = "", name = "keywordss") String keywords
+            @RequestParam(defaultValue = "", name = "keywords") String keywords
     ){
         List<Employee> employeeByPage = employeeService.getEmployeeByPage(page, size, keywords);
         Integer count = employeeService.getCountByKeywords(keywords);

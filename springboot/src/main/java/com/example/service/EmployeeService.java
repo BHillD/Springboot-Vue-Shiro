@@ -36,6 +36,7 @@ public class EmployeeService{
      */
     public List<Employee> getEmployeeByPage(Integer page, Integer size, String keywords) {
         Integer start = (page - 1) * size;
+        System.out.println(keywords);
         return employeeMapper.getEmployeeByPage(start, size, keywords);
     }
 
@@ -61,7 +62,7 @@ public class EmployeeService{
 
     /**
      * 删除员工信息
-     * @param obj 所选员工身份信息的JSON对象
+     * @param
      */
     @Transactional
     public void deleteEmployee(String[] idCards) throws Exception{

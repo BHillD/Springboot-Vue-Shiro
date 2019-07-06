@@ -386,7 +386,6 @@
         })
       },
       doDelete(id){
-        this.tableLoading = true;
         var _this = this;
         _this.deleteRequest("/basic/employee?id=" + id).then(resp =>{
           if(resp && resp.status == 200){
@@ -395,7 +394,7 @@
             this.$message("操作失败,请重试");
           }
         })
-        this.tableLoading = false;
+        this.loadEmps();
       },
       keywordsChange(val){
         if (val == '') {

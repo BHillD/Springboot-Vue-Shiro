@@ -34,20 +34,8 @@ public class SalaryController {
         return Response.ok(salaryService.getAllaccountset());
     }
 
-    @PostMapping("/accountset")
-    public ResponseEntity addAccountset(@RequestBody JSONObject obj){
+//
 
-    }
-
-    @PutMapping("/accountset")
-    public ResponseEntity editAccountset(@RequestBody JSONObject obj){
-
-    }
-
-    @DeleteMapping("/ccountset")
-    public ResponseEntity delAccountset(@RequestParam("id") String id){
-
-    }
 
     @PostMapping("/empsalary")
     public ResponseEntity addSalary(@RequestBody JSONObject obj){
